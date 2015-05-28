@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:stk="http://schemas.microsoft.com/soap-toolkit/wsdl-extension" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlns="http://outlook.microsoft.com/add-ins/SMS/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:typens="http://outlook.microsoft.com/add-ins/SMS/type" name="SMSWS" targetNamespace="http://outlook.microsoft.com/add-ins/SMS/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" elementFormDefault="qualified" targetNamespace="http://outlook.microsoft.com/add-ins/SMS/type" />
+  </types>
+  <message name="SMSWebService.sendXml">
+    <part name="Carrier" type="xsd:string" />
+    <part name="Id" type="xsd:string" />
+    <part name="Password" type="xsd:string" />
+    <part name="ToMobile" type="xsd:string" />
+    <part name="Message" type="xsd:string" />
+    <part name="MsgType" type="xsd:string" />
+  </message>
+  <message name="SMSWebService.sendXmlResponse">
+    <part name="Result" type="xsd:string" />
+  </message>
+  <portType name="SMSWebServiceSoapPort">
+    <operation name="sendXml" parameterOrder="Carrier Id Password ToMobile Message MsgType">
+      <input message="wsdlns:SMSWebService.sendXml" />
+      <output message="wsdlns:SMSWebService.sendXmlResponse" />
+    </operation>
+  </portType>
+  <binding name="SMSWebServiceSoapBinding" type="wsdlns:SMSWebServiceSoapPort">
+    <stk:binding preferredEncoding="UTF-8" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="sendXml">
+      <soap:operation soapAction="http://outlook.microsoft.com/add-ins/SMS/action/SMSWebService.sendXml" />
+      <input>
+        <soap:body use="encoded" namespace="http://outlook.microsoft.com/add-ins/SMS/message/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="http://outlook.microsoft.com/add-ins/SMS/message/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="SMSWS">
+    <port name="SMSWebServiceSoapPort" binding="wsdlns:SMSWebServiceSoapBinding">
+      <soap:address location="http://202.108.35.168/cgi-bin/ws/smswebservice0101" />
+    </port>
+  </service>
+</definitions>

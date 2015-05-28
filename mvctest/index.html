@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<title>社友——校园活动应有尽有~</title>
+<link rel="stylesheet" href="jm/jquery.mobile-1.4.5.min.css">
+<script src="jq/jquery-2.1.3.min.js"></script>
+<script language="javascript">
+$.get("/Home/judge",function(data){if(data=="true")window.location.href="user.html#act";});
+</script>
+<script src="jm/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page" id="home">
+	<div data-role="popup" id="login">
+    	<form>
+        	<div style="padding:10px 20px;">
+            	<h3 id="dlcw">登录</h3>
+            	<label for="un" class="ui-hidden-accessible">Username</label>
+            	<input type="text" name="" value="" id="un" placeholder="用户名">
+            	<label for="pw" class="ui-hidden-accessible">Password</label>
+            	<input type="password" name="" value="" id="pw" placeholder="密码">
+            	<a href="user.html" data-ajax="false" data-role="button" data-theme="b" data-inline="true" id="reg">注册</a>
+                <button type="submit" data-theme="b" data-inline="true" id="lgi">登录</button>
+        	</div>
+    	</form>
+	</div>
+    <div data-role="popup" id="tips">
+    	<p id="tw">Tips：开启浏览器全屏功能，获得更好体验~</p>
+    </div>
+	<div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#login" data-role="button" data-icon="check" data-rel="popup" data-position-to="window" data-transition="pop">登录</a>
+        <h1>首页</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="content">
+    	<div id="mp"><img src="image/start.jpg" width="100%" id="ts"></div>
+		<ul data-role="listview"  data-inset="true">
+        	<li><a href="#login" data-rel="popup" data-position-to="window" data-transition="pop">登录/注册</a></li>
+			<li><a href="#school" data-transition="flip">随便逛逛（选择学校）</a></li>
+		</ul>
+	</div>
+	<div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="school">
+	<div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#home" data-role="button" data-icon="home" data-transition="flip" data-direction="reverse">首页</a>
+        <h1>请选择您的学校</h1>
+		<a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="collapsible-set">
+		<div data-role="collapsible">
+			<h3>D</h3>
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>东华大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="40">东华大学（延安路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="41">东华大学（松江校区）</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="collapsible">
+			<h3>F</h3>
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>复旦大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="9">复旦大学（邯郸校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="10">复旦大学（枫林校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="11">复旦大学（张江校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="12">复旦大学（江湾校区）</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="collapsible" data-collapsed="false">
+			<h3>H</h3>
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>华东理工大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="20">华东理工大学（徐汇校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="21">华东理工大学（奉贤校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>华东师范大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="1">华东师范大学（闵行校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="2">华东师范大学（中北校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>华东政法大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="38">华东政法大学（松江校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="39">华东政法大学（长宁校区）</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="collapsible">
+			<h3>S</h3>
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>上海财经大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="17">上海财经大学（国定路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="18">上海财经大学（中山北一路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="19">上海财经大学（昆山路校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="32">上海大学（宝山校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="33">上海大学（延长校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="34">上海大学（嘉定校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="35">上海大学（徐泾校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海对外经贸大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="42">上海对外经贸大学（松江校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="43">上海对外经贸大学（古北校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海工程技术大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="46">上海工程技术大学（松江校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="47">上海工程技术大学（仙霞路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="48">上海工程技术大学（新村路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="49">上海工程技术大学（逸仙路校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海海事大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="51">上海海事大学（临港校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="52">上海海事大学（民生路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="53">上海海事大学（东明路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="54">上海海事大学（港湾校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="55">上海海事大学（海华校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海海洋大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="56">上海海洋大学（临港校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="57">上海海洋大学（军工路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="58">上海海洋大学（民星路校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海交通大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="3">上海交通大学（闵行校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="4">上海交通大学（七宝校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="5">上海交通大学（卢湾校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="6">上海交通大学（法华校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="7">上海交通大学（徐汇校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="8">上海交通大学医学院</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海理工大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="25">上海理工大学（军工路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="26">上海理工大学（军工路南校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="27">上海理工大学（军工路1100号校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="28">上海理工大学（复兴路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="29">上海理工大学（水丰路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="30">上海理工大学（营口路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="31">上海理工大学（南汇校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海立信会计学院</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="44">上海立信会计学院（松江校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="45">上海立信会计学院（徐汇校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海师范大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="22">上海师范大学（徐汇校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="23">上海师范大学（奉贤校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="24">上海师范大学（虹口校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海视觉艺术学院</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="50">上海视觉艺术学院（松江校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海外国语大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="36">上海外国语大学（虹口校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="37">上海外国语大学（松江校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海政法学院</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="61">上海政法学院（青浦校区）</a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>上海中医药大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="59">上海中医药大学（浦东校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="60">上海中医药大学（徐汇校区）</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="collapsible">
+			<h3>T</h3>
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>同济大学</h3>
+					<ul data-role="listview" data-inset="true">
+						<li><a href="#org" data-transition="flow" class="school" id="13">同济大学（四平路校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="14">同济大学（沪北校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="15">同济大学（沪西校区）</a></li>
+						<li><a href="#org" data-transition="flow" class="school" id="16">同济大学（嘉定校区）</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="org">
+	<div data-role="panel" data-position="left" data-display="reveal" id="quick_org">
+    	<div class="ui-panel-inner">
+        	<h2>导航栏</h2>
+            <ul data-role="listview" data-inset="true" data-theme="b">
+            	<li><a href="#home" data-transition="flip" data-direction="reverse">首页</a></li>
+				<li><a href="#school" data-transition="flow" data-direction="reverse">选择学校</a></li>
+                <li><a href="#act" data-transition="flow">活动信息</a></li>
+                <li><a href="#share" data-rel="dialog" data-transition="pop">分享到&hellip;</a></li>
+                <li><a href="#dl" data-rel="dialog" data-transition="pop">下载App</a></li>
+			</ul>
+        </div>
+    </div>
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#quick_org" data-role="button" data-icon="bars">导航</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#" class="ui-btn-active ui-state-persist">社团信息</a></li>
+                <li><a href="#act" data-transition="slide">活动信息</a></li>
+            </ul>
+        </div>
+	</div>
+	<div data-role="content">
+    	<div class="ui-grid-b">
+        	<div class="ui-block-a" style="width:65%"><input type="text" name="o_name" id="o_name" value="" placeholder="输入社团名字搜索"></div>
+            <div class="ui-block-b" style="width:5%"></div>
+            <div class="ui-block-c" style="width:30%"><a href="#org_search" data-transition="flow" data-role="button" data-mini="true" data-icon="search">搜索</a></div>
+        </div>
+    	<ul data-role="listview" data-inset="true">
+        	<li><a href="#org_class" class="oc" ocid="1" data-transition="flow"><img src="image/xskj.png"><h2>学术科技</h2><p>因为所以 科学道理，高山原理 化学物理</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="2" data-transition="flow"><img src="image/mswh.png"><h2>民俗文化</h2><p>56个民族56枝花，56个兄弟姐妹是一家</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="3" data-transition="flow"><img src="image/hwyd.png"><h2>户外运动</h2><p>其实偶尔也有室内运动~</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="4" data-transition="flow"><img src="image/wyyl.png"><h2>文艺娱乐</h2><p>文艺不装B，娱乐不致死</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="5" data-transition="flow"><img src="image/tyjs.png"><h2>体育健康</h2><p>大球小球，南拳北腿；小到跑步，大到武术</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="6" data-transition="flow"><img src="image/zhsj.png"><h2>综合实践</h2><p>爷爷说，实践出真知</p></a></li>
+        	<li><a href="#org_class" class="oc" ocid="7" data-transition="flow"><img src="image/qt.png"><h2>其他</h2><p>天文地理，大象蚂蚁，四书五经，蜡笔小新</p></a></li>
+        </ul>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="org_class">
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#org" data-role="button" data-icon="back" data-transition="flow" data-direction="reverse">返回</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="content">
+    	<ul data-role="listview" data-inset="true" id="o_0">
+        	<li><a href="#org_detail" class="o2dt" id="j0" oid="0" data-transition="flow"><img src="image/tupian2.jpg" id="o_a0"><h2 id="o_b0">这里是名称</h2><p id="o_c0">这里是简介</p></a></li>
+        </ul>
+		<ul data-role="listview" data-inset="true" id="o_1">
+        	<li><a href="#org_detail" class="o2dt" id="j1" oid="1" data-transition="flow"><img src="image/tupian2.jpg" id="o_a1"><h2 id="o_b1"> </h2><p id="o_c1"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_2">
+        	<li><a href="#org_detail" class="o2dt" id="j2" oid="2" data-transition="flow"><img src="image/tupian2.jpg" id="o_a2"><h2 id="o_b2"> </h2><p id="o_c2"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_3">
+        	<li><a href="#org_detail" class="o2dt" id="j3" oid="3" data-transition="flow"><img src="image/tupian2.jpg" id="o_a3"><h2 id="o_b3"> </h2><p id="o_c3"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_4">
+        	<li><a href="#org_detail" class="o2dt" id="j4" oid="4" data-transition="flow"><img src="image/tupian2.jpg" id="o_a4"><h2 id="o_b4"> </h2><p id="o_c4"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_5">
+        	<li><a href="#org_detail" class="o2dt" id="j5" oid="5" data-transition="flow"><img src="image/tupian2.jpg" id="o_a5"><h2 id="o_b5"> </h2><p id="o_c5"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_6">
+        	<li><a href="#org_detail" class="o2dt" id="j6" oid="6" data-transition="flow"><img src="image/tupian2.jpg" id="o_a6"><h2 id="o_b6"> </h2><p id="o_c6"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_7">
+        	<li><a href="#org_detail" class="o2dt" id="j7" oid="7" data-transition="flow"><img src="image/tupian2.jpg" id="o_a7"><h2 id="o_b7"> </h2><p id="o_c7"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_8">
+        	<li><a href="#org_detail" class="o2dt" id="j8" oid="8" data-transition="flow"><img src="image/tupian2.jpg" id="o_a8"><h2 id="o_b8"> </h2><p id="o_c8"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_9">
+        	<li><a href="#org_detail" class="o2dt" id="j9" oid="9" data-transition="flow"><img src="image/tupian2.jpg" id="o_a9"><h2 id="o_b9"> </h2><p id="o_c9"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_10">
+        	<li><a href="#org_detail" class="o2dt" id="j10" oid="10" data-transition="flow"><img src="image/tupian2.jpg" id="o_a10"><h2 id="o_b10"> </h2><p id="o_c10"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_11">
+        	<li><a href="#org_detail" class="o2dt" id="j11" oid="11" data-transition="flow"><img src="image/tupian2.jpg" id="o_a11"><h2 id="o_b11"> </h2><p id="o_c11"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_12">
+        	<li><a href="#org_detail" class="o2dt" id="j12" oid="12" data-transition="flow"><img src="image/tupian2.jpg" id="o_a12"><h2 id="o_b12"> </h2><p id="o_c12"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_13">
+        	<li><a href="#org_detail" class="o2dt" id="j13" oid="13" data-transition="flow"><img src="image/tupian2.jpg" id="o_a13"><h2 id="o_b13"> </h2><p id="o_c13"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_14">
+        	<li><a href="#org_detail" class="o2dt" id="j14" oid="14" data-transition="flow"><img src="image/tupian2.jpg" id="o_a14"><h2 id="o_b14"> </h2><p id="o_c14"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_15">
+        	<li><a href="#org_detail" class="o2dt" id="j15" oid="15" data-transition="flow"><img src="image/tupian2.jpg" id="o_a15"><h2 id="o_b15"> </h2><p id="o_c15"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_16">
+        	<li><a href="#org_detail" class="o2dt" id="j16" oid="16" data-transition="flow"><img src="image/tupian2.jpg" id="o_a16"><h2 id="o_b16"> </h2><p id="o_c16"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_17">
+        	<li><a href="#org_detail" class="o2dt" id="j17" oid="17" data-transition="flow"><img src="image/tupian2.jpg" id="o_a17"><h2 id="o_b17"> </h2><p id="o_c17"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_18">
+        	<li><a href="#org_detail" class="o2dt" id="j18" oid="18" data-transition="flow"><img src="image/tupian2.jpg" id="o_a18"><h2 id="o_b18"> </h2><p id="o_c18"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="o_19">
+        	<li><a href="#org_detail" class="o2dt" id="j19" oid="19" data-transition="flow"><img src="image/tupian2.jpg" id="o_a19"><h2 id="o_b19"> </h2><p id="o_c19"> </p></a></li>
+        </ul>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="org_search">
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#org" data-role="button" data-icon="back" data-transition="flow" data-direction="reverse">返回</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="content">
+    	<ul data-role="listview" data-inset="true" id="os_0">
+        	<li><a href="#org_detail" class="o2dt" id="k0" oid="0" data-transition="flow"><img src="image/tupian2.jpg" id="os_a0"><h2 id="os_b0">这里是名称</h2><p id="os_c0">这里是简介</p></a></li>
+        </ul>
+		<ul data-role="listview" data-inset="true" id="os_1">
+        	<li><a href="#org_detail" class="o2dt" id="k1" oid="1" data-transition="flow"><img src="image/tupian2.jpg" id="os_a1"><h2 id="os_b1"> </h2><p id="os_c1"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_2">
+        	<li><a href="#org_detail" class="o2dt" id="k2" oid="2" data-transition="flow"><img src="image/tupian2.jpg" id="os_a2"><h2 id="os_b2"> </h2><p id="os_c2"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_3">
+        	<li><a href="#org_detail" class="o2dt" id="k3" oid="3" data-transition="flow"><img src="image/tupian2.jpg" id="os_a3"><h2 id="os_b3"> </h2><p id="os_c3"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_4">
+        	<li><a href="#org_detail" class="o2dt" id="k4" oid="4" data-transition="flow"><img src="image/tupian2.jpg" id="os_a4"><h2 id="os_b4"> </h2><p id="os_c4"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_5">
+        	<li><a href="#org_detail" class="o2dt" id="k5" oid="5" data-transition="flow"><img src="image/tupian2.jpg" id="os_a5"><h2 id="os_b5"> </h2><p id="os_c5"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_6">
+        	<li><a href="#org_detail" class="o2dt" id="k6" oid="6" data-transition="flow"><img src="image/tupian2.jpg" id="os_a6"><h2 id="os_b6"> </h2><p id="os_c6"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_7">
+        	<li><a href="#org_detail" class="o2dt" id="k7" oid="7" data-transition="flow"><img src="image/tupian2.jpg" id="os_a7"><h2 id="os_b7"> </h2><p id="os_c7"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_8">
+        	<li><a href="#org_detail" class="o2dt" id="k8" oid="8" data-transition="flow"><img src="image/tupian2.jpg" id="os_a8"><h2 id="os_b8"> </h2><p id="os_c8"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="os_9">
+        	<li><a href="#org_detail" class="o2dt" id="k9" oid="9" data-transition="flow"><img src="image/tupian2.jpg" id="os_a9"><h2 id="os_b9"> </h2><p id="os_c9"> </p></a></li>
+        </ul>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="act">
+	<div data-role="panel" data-position="left" data-display="reveal" id="quick_act">
+    	<div class="ui-panel-inner">
+        	<h2>导航栏</h2>
+            <ul data-role="listview" data-inset="true" data-theme="b">
+            	<li><a href="#home" data-transition="flip" data-direction="reverse">首页</a></li>
+				<li><a href="#school" data-transition="flow" data-direction="reverse">选择学校</a></li>
+                <li><a href="#org" data-transition="flow" data-direction="reverse">社团信息</a></li>
+                <li><a href="#share" data-rel="dialog" data-transition="pop">分享到&hellip;</a></li>
+                <li><a href="#dl" data-rel="dialog" data-transition="pop">下载App</a></li>
+			</ul>
+        </div>
+    </div>
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#quick_act" data-role="button" data-icon="bars">导航</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#org" data-transition="slide" data-direction="reverse">社团信息</a></li>
+                <li><a href="#" class="ui-btn-active ui-state-persist">活动信息</a></li>
+            </ul>
+        </div>
+	</div>
+	<div data-role="content" id="a_top">
+    	<button data-icon="refresh" data-mini="true" id="arf">刷新</button>
+    	<ul data-role="listview" data-inset="true" id="a_0">
+        	<li><h1 id="a_a0"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i0" aid="0" data-transition="flow"><h1 id="a_b0">这里是标题</h1><p id="a_c0">这里是主办方</p><p id="a_d0">这里是内容提要。。。</p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_1">
+        	<li><h1 id="a_a1"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i1" aid="1" data-transition="flow"><h1 id="a_b1"> </h1><p id="a_c1"> </p><p id="a_d1"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_2">
+        	<li><h1 id="a_a2"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i2" aid="2" data-transition="flow"><h1 id="a_b2"> </h1><p id="a_c2"> </p><p id="a_d2"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_3">
+        	<li><h1 id="a_a3"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i3" aid="3" data-transition="flow"><h1 id="a_b3"> </h1><p id="a_c3"> </p><p id="a_d3"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_4">
+        	<li><h1 id="a_a4"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i4" aid="4" data-transition="flow"><h1 id="a_b4"> </h1><p id="a_c4"> </p><p id="a_d4"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_5">
+        	<li><h1 id="a_a5"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i5" aid="5" data-transition="flow"><h1 id="a_b5"> </h1><p id="a_c5"> </p><p id="a_d5"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_6">
+        	<li><h1 id="a_a6"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i6" aid="6" data-transition="flow"><h1 id="a_b6"> </h1><p id="a_c6"> </p><p id="a_d6"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_7">
+        	<li><h1 id="a_a7"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i7" aid="7" data-transition="flow"><h1 id="a_b7"> </h1><p id="a_c7"> </p><p id="a_d7"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_8">
+        	<li><h1 id="a_a8"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i8" aid="8" data-transition="flow"><h1 id="a_b8"> </h1><p id="a_c8"> </p><p id="a_d8"> </p></a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true" id="a_9">
+        	<li><h1 id="a_a9"><img src="image/tupian1.jpg" style="width:100%"></h1></li>
+            <li><a href="#act_detail" class="a2dt" id="i9" aid="9" data-transition="flow"><h1 id="a_b9"> </h1><p id="a_c9"> </p><p id="a_d9"> </p></a></li>
+        </ul>
+        <button data-icon="forward" data-mini="true" id="anp" disabled="">下一页</button>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="org_detail">
+	<div data-role="popup" id="gzp">
+    	<p>亲，请先登录~</p>
+    </div>
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#org" data-role="button" data-icon="back" data-transition="flow" data-direction="reverse">返回</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="content">
+        <h1 class="ui-bar ui-bar-a ui-corner-all" id="od_a"> </h1>
+        <div class="ui-body ui-body-a ui-corner-all">
+        	<p id="od_b"><img src="image/tupian1.jpg" style="width:100%"></p>
+        	<p id="od_c"> </p>
+        </div>
+        <button type="submit" data-icon="check" data-theme="b" id="gz">关注</button>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="act_detail">
+	<div data-role="popup" id="bmp">
+    	<p>亲，请先登录~</p>
+    </div>
+    <div data-role="header" data-theme="b" data-position="fixed">
+		<a href="#act" data-role="button" data-icon="back" data-transition="flow" data-direction="reverse">返回</a>
+        <h1>社友</h1>
+        <a href="#dl" data-role="button" data-icon="arrow-d" data-rel="dialog" data-transition="pop">下载App</a>
+	</div>
+	<div data-role="content">
+        <h1 class="ui-bar ui-bar-a ui-corner-all" id="ad_a"> </h1>
+        <div class="ui-body ui-body-a ui-corner-all">
+        	<p id="ad_b"><img src="image/tupian1.jpg" style="width:100%"></p>
+        	<p id="ad_c"> </p>
+        </div>
+        <button type="submit" data-icon="check" data-theme="b" id="bm">报名</button>
+	</div>
+    <div data-role="footer" data-theme="b" data-position="fixed">
+		<h4><a href="#dl" data-rel="dialog" data-transition="pop">社友——校园活动应有尽有~</a></h4>
+	</div>
+</div>
+<div data-role="page" id="share">
+	<div data-role="header" data-theme="b" data-position="fixed">
+		<h1>分享</h1>
+	</div>
+	<div data-role="content">
+		<ul data-role="listview" data-inset="true">
+        	<li><a href="http://www.jiathis.com/send/?webid=tsina&url=http://www.sheyou.me&title=社友——校园活动应有尽有~"><img src="image/tupian2.jpg"><h2>分享到微博</h2></a></li>
+            <li><a href="http://www.jiathis.com/send/?webid=renren&url=http://www.sheyou.me&title=社友——校园活动应有尽有~"><img src="image/tupian2.jpg"><h2>分享到人人</h2></a></li>
+            <li><a href="http://www.jiathis.com/send/?webid=qzone&url=http://www.sheyou.me&title=社友——校园活动应有尽有~"><img src="image/tupian2.jpg"><h2>分享到空间</h2></a></li>
+        </ul>
+	</div>
+</div>
+<div data-role="page" id="dl">
+	<div data-role="header" data-theme="b" data-position="fixed">
+		<h1>App下载</h1>
+	</div>
+	<div data-role="content">
+    	<ul data-role="listview" data-inset="true">
+        	<li data-icon="arrow-d"><a href="http://sheyou.me/XiaoNei.apk"><img src="image/tupian2.jpg" id="android"><h2>For Android</h2><p>Ver1.2</p></a></li>
+        	<li data-icon="arrow-d"><a href="https://itunes.apple.com/cn/app/id944798503"><img src="image/tupian2.jpg" id="ios"><h2>For iOS</h2><p>Ver1.0</p></a></li>
+        	<li data-icon="arrow-d"><a href="#" disabled=""><img src="image/tupian2.jpg" id="wp"><h2>For WP</h2><p>即将推出，审核ing...</p></a></li>
+        	<li data-icon="arrow-u-r"><a href="#"><h2>微信中，请点击右上角菜单，</h2><h2>选择“在浏览器中打开”就能下啦~~</h2><p>微信屏蔽了下载链接啊啊啊 (╯‵□′)╯︵┻━┻</p></a></li>
+        </ul>
+	</div>
+</div>
+<script src="js/indexjs.js"></script>
+</body>
+</html>
