@@ -3629,6 +3629,37 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 conn.Close();
             }
         }
+        public static bool reg_md5_src(string name, string passwd, string phone, int schid, int sex,string src)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            Random random = new Random();
+            int n = random.Next(1, 5);
+            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,src) values('" + name + "','" + passwd + "','" + passwd + "','" + phone + "','tidai" + n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "','" + src + "')";
+
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                add_sch_gz(name, schid);
+                return true;
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("reg", ee.Message.ToString());
+                //return (ee.Message.ToString());
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public static bool bind_wx(string openid,string loginid,string passwd)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;

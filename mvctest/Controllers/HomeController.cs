@@ -308,6 +308,17 @@ namespace mvctest.Controllers
             }
             return "wrong code";
         }
+        public string webreg_md5_src(string loginid, string passwd, string nickname, int schid, int sex, string code,string src)
+        {
+            string infcode = (string)Session["infcode"];
+            if (infcode == code)
+            {
+                if (sqlop.reg_md5_src(loginid, passwd, nickname, schid, sex,src)) return "true";
+                return "false";
+
+            }
+            return "wrong code";
+        }
         public string reg(string loginid, string passwd, string nickname, int schid, int sex)
         {
             if (sqlop.reg(loginid, passwd, nickname, schid, sex)) return "true";
@@ -448,6 +459,19 @@ namespace mvctest.Controllers
             if (rinfcode == code)
             {
                 if (sqlop.reg_md5(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex)) return "true";
+                return "false";
+            }
+            else
+                return "wrong code";
+        }
+        public string regx_md5_src(string rinfcode, string passwd, string nickname, int schid, int sex,string src)
+        {
+
+            string code = (string)((userinfo)(Session["infcode"])).infcode;
+
+            if (rinfcode == code)
+            {
+                if (sqlop.reg_md5_src(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex,src)) return "true";
                 return "false";
             }
             else
