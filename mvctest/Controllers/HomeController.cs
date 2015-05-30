@@ -137,12 +137,33 @@ namespace mvctest.Controllers
             return "false";
         }
 
-        public string login_md5(string name, string passwd)
+        public string login_md5(string name, string passwd, string leanid)
         {
             string s = Request.UserHostAddress;
 
             Session.Timeout = 30;
-            string result = sqlop.login_md5(name, passwd, s);
+            string result;
+            if (leanid != null)
+            {
+                result = sqlop.login_md5_leanid(name, passwd, s,leanid);
+            }
+            else  result = sqlop.login_md5(name, passwd, s);
+            if (result != "false")
+            {
+
+                Session["username"] = name;
+                Session["passwd"] = passwd;
+
+                return result;
+            }
+            return "false";
+        }
+        public string login_md5_leanid(string name, string passwd, string leanid)
+        {
+            string s = Request.UserHostAddress;
+
+            Session.Timeout = 30;
+            string result = sqlop.login_md5_leanid(name, passwd, s, leanid);
             if (result != "false")
             {
 
@@ -319,6 +340,17 @@ namespace mvctest.Controllers
             }
             return "wrong code";
         }
+        public string webreg_md5_device(string loginid, string passwd, string nickname, int schid, int sex, string code, string deviceversion, string operationsystem, string devicenumber)
+        {
+            string infcode = (string)Session["infcode"];
+            if (infcode == code)
+            {
+                if (sqlop.reg_md5_device(loginid, passwd, nickname, schid, sex, deviceversion, operationsystem, devicenumber)) return "true";
+                return "false";
+
+            }
+            return "wrong code";
+        }
         public string reg(string loginid, string passwd, string nickname, int schid, int sex)
         {
             if (sqlop.reg(loginid, passwd, nickname, schid, sex)) return "true";
@@ -472,6 +504,19 @@ namespace mvctest.Controllers
             if (rinfcode == code)
             {
                 if (sqlop.reg_md5_src(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex,src)) return "true";
+                return "false";
+            }
+            else
+                return "wrong code";
+        }
+        public string regx_md5_device(string rinfcode, string passwd, string nickname, int schid, int sex, string deviceversion, string operationsystem, string devicenumber)
+        {
+
+            string code = (string)((userinfo)(Session["infcode"])).infcode;
+
+            if (rinfcode == code)
+            {
+                if (sqlop.reg_md5_device(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex, deviceversion, operationsystem, devicenumber)) return "true";
                 return "false";
             }
             else

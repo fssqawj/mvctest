@@ -1072,7 +1072,72 @@ namespace mvctest.dbop
                 conn.Close();
             }
         }
+        public static string get_exquisite(string btime, string etime)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school,ExquisitePush where activity.activitytime > '" + btime + "' and activity.activitytime < '" + etime + "' and activity.isexquisite = 1 and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID and activity.activityid = ExquisitePush.activityid";
+            int pv = 0, cv = 0;
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+                JObject emp = new JObject();
 
+                while (sdr.Read())
+                {
+                    //if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
+                    //else emp.Add("GroupID", "");
+                    emp.Add("ActivityID", (string)sdr["ActivityID"]);
+                    if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
+                    //if (sdr["OrganazationID"] != DBNull.Value) emp.Add("OrganazationID", (int)sdr["OrganazationID"]);
+                    //if (sdr["OrganizationName"] != DBNull.Value) emp.Add("OrganizationName", (string)sdr["OrganizationName"]);
+                    //if (sdr["ActivirtyContent"] != DBNull.Value) emp.Add("ActivirtyContent", (string)sdr["ActivirtyContent"]);
+                    
+                    //if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
+                    emp.Add("ActivirtyRecommendWords", (string)sdr["PushIntro"]);
+                    //if (sdr["originaldirx"] != DBNull.Value) emp.Add("originaldirx", (string)sdr["originaldirx"]);
+                    //if (sdr["Taga"] != DBNull.Value) emp.Add("Taga", (string)sdr["Taga"]);
+                    //if (sdr["Tagb"] != DBNull.Value) emp.Add("Tagb", (string)sdr["Tagb"]);
+                    //if (sdr["Tagc"] != DBNull.Value) emp.Add("Tagc", (string)sdr["Tagc"]);
+                    
+                    if (sdr["Address"] != DBNull.Value) emp.Add("Address", (string)sdr["Address"]);
+                    if (sdr["PhotoDir"] != DBNull.Value) emp.Add("ActivityImage", (string)sdr["PhotoDir"]);
+                    //if (sdr["Rate"] != DBNull.Value) emp.Add("Rate", (double)sdr["Rate"]);
+                    if (sdr["SchoolID"] != DBNull.Value) emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    if (sdr["SchoolName"] != DBNull.Value) emp.Add("SchoolName", (string)sdr["SchoolName"]);
+                    if (sdr["ActivityTime"] != DBNull.Value) emp.Add("ActivityTime", ((DateTime)sdr["ActivityTime"]).ToString());
+                    //if (sdr["NeedEnroll"] != DBNull.Value) emp.Add("NeedEnroll", (int)sdr["NeedEnroll"]);
+                    //if (sdr["girllim"] != DBNull.Value) emp.Add("girllim", (int)sdr["girllim"]);
+                    //if (sdr["boylim"] != DBNull.Value) emp.Add("boylim", (int)sdr["boylim"]);
+                    //if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
+                    //if (sdr["Pv"] != DBNull.Value) emp.Add("Pv", (int)sdr["Pv"]);
+                    //if (sdr["Cv"] != DBNull.Value) emp.Add("Cv", (int)sdr["Cv"]);
+                    
+                    //if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
+                }
+                
+                
+                obj.Add(emp);
+                emp1.Add("exquisite_info", obj);
+                conn.Close();
+                return emp1.ToString();
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("exquisite_info", ee.Message.ToString());
+                return (ee.Message.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public static string get_member_actx(string loginid, int actid)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -3420,8 +3485,100 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 conn.Close();
             }
         }
-        
 
+        public static string login_md5_leanid(string loginid, string passwd, string ipadr,string leanid)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from member where loginid = '" + loginid + "' and md5pwd = '" + passwd + "'";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+                if (sdr.Read())
+                {
+                    JObject emp = new JObject();
+                    if (sdr["SchoolID"] != DBNull.Value) emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    else emp.Add("SchoolID", 7);
+                    if (sdr["Sex"] != DBNull.Value) emp.Add("Sex", (int)sdr["Sex"]);
+                    if (sdr["nickname"] != DBNull.Value) emp.Add("nickname", (string)sdr["nickname"]);
+                    if (sdr["introduce"] != DBNull.Value) emp.Add("introduce", (string)sdr["introduce"]);
+                    else emp.Add("introduce", "赶快去添加个性签名吧");
+                    if (sdr["photo"] != DBNull.Value) emp.Add("photo", (string)sdr["photo"]);
+                    else emp.Add("photo", "tidai.jpg");
+                    if (sdr["regtime"] != DBNull.Value)
+                    {
+                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToShortDateString());
+                        if (DateTime.Compare((DateTime)sdr["regtime"], DateTime.Parse("2015-04-15")) < 0) emp.Add("needsch", 1);
+                        else emp.Add("needsch", 0);
+                    }
+                    else
+                    {
+                        emp.Add("regtime", "2014-7-1");
+                        emp.Add("needsch", 1);
+                    }
+                    conn.Close();
+                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values ('" + loginid + "','" + DateTime.Now.ToString() + "','" + ipadr + "' )";
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                    cmd.CommandText = "update member set leancloudid = '" + leanid + "' where loginid = '" + loginid + "'";
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+
+                    obj.Add(emp);
+
+                    emp1.Add("memberinfo", obj);
+                    //obj.ToString();
+                    conn.Close();
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = '" + loginid + "' and cjState = 1";
+                    conn.Open();
+                    sdr = cmd.ExecuteReader();
+                    if (sdr.Read()) emp1.Add("actnum", (int)sdr["cnt"]);
+                    else emp1.Add("actnum", 0);
+                    conn.Close();
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = '" + loginid + "' and gzState = 1";
+                    conn.Open();
+                    sdr = cmd.ExecuteReader();
+                    if (sdr.Read()) emp1.Add("orgnum", (int)sdr["cnt"]);
+                    else emp1.Add("orgnum", 0);
+                    conn.Close();
+                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= '" + loginid + "' or user2 = '" + loginid + "') and state = 1";
+                    conn.Open();
+                    sdr = cmd.ExecuteReader();
+                    if (sdr.Read()) emp1.Add("memnum", (int)sdr["cnt"]);
+                    else emp1.Add("memnum", 0);
+                    conn.Close();
+                    cmd.CommandText = "select * from member_school where loginid = '" + loginid + "' and gzstate = 1";
+                    conn.Open();
+                    sdr = cmd.ExecuteReader();
+                    if (sdr.Read())
+                        emp1.Add("schstate", 1);
+                    else emp1.Add("schstate", 0);
+                    return emp1.ToString();
+                }
+                else
+                    return "false";
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("login", ee.Message.ToString());
+                return (ee.Message.ToString());
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public static string tg_count(string tgid, string ck, string psys, string agent)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -3659,7 +3816,36 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 conn.Close();
             }
         }
+        public static bool reg_md5_device(string name, string passwd, string phone, int schid, int sex, string deviceversion, string operationsystem, string deviceNumber)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            Random random = new Random();
+            int n = random.Next(1, 5);
+            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,deviceversion,operationsystem,deviceNumber) values('" + name + "','" + passwd + "','" + passwd + "','" + phone + "','tidai" + n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "','" + deviceversion + "','" + operationsystem + "','" + deviceNumber + "')";
 
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                add_sch_gz(name, schid);
+                return true;
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("reg", ee.Message.ToString());
+                //return (ee.Message.ToString());
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public static bool bind_wx(string openid,string loginid,string passwd)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;

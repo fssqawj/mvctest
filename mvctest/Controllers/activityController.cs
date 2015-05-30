@@ -24,6 +24,10 @@ namespace mvctest.Controllers
             }
             return sqlop.get_activity_info((string)Session["username"]);
         }
+        public string get_exquisite(string btime, string etime)
+        {
+            return sqlop.get_exquisite(btime, etime);
+        }
         public string get_activity_allmember(string actid)
         {
             return sqlop.get_activity_allmember(actid);
