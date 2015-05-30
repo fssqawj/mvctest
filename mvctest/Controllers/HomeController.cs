@@ -318,14 +318,20 @@ namespace mvctest.Controllers
             }
             return "wrong code";
         }
-        public string webreg_md5(string loginid, string passwd, string nickname, int schid, int sex, string code)
+        public string webreg_md5(string loginid, string passwd, string nickname, int schid, int sex, string code, string deviceversion, string operationsystem, string devicenumber)
         {
             string infcode = (string)Session["infcode"];
             if (infcode == code)
             {
-                if (sqlop.reg_md5(loginid, passwd, nickname, schid, sex)) return "true";
-                return "false";
-
+                if (deviceversion != null)
+                {
+                    if (sqlop.reg_md5_device(loginid, passwd, nickname, schid, sex, deviceversion,operationsystem,devicenumber)) return "true";
+                    return "false";
+                }
+                else {
+                    if (sqlop.reg_md5(loginid, passwd, nickname, schid, sex)) return "true";
+                    return "false";
+                }
             }
             return "wrong code";
         }
@@ -483,15 +489,23 @@ namespace mvctest.Controllers
                 return "wrong code";
         }
 
-        public string regx_md5(string rinfcode, string passwd, string nickname, int schid, int sex)
+        public string regx_md5(string rinfcode, string passwd, string nickname, int schid, int sex, string deviceversion, string operationsystem, string devicenumber)
         {
 
             string code = (string)((userinfo)(Session["infcode"])).infcode;
 
             if (rinfcode == code)
             {
-                if (sqlop.reg_md5(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex)) return "true";
-                return "false";
+                if (deviceversion != null)
+                {
+                    if (sqlop.reg_md5_device(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex, deviceversion, operationsystem, devicenumber)) return "true";
+                    return "false";
+                }
+                else
+                {
+                    if (sqlop.reg_md5(((userinfo)(Session["infcode"])).name, passwd, nickname, schid, sex)) return "true";
+                    return "false";
+                }
             }
             else
                 return "wrong code";

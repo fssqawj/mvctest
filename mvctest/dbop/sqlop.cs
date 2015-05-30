@@ -1098,7 +1098,7 @@ namespace mvctest.dbop
                     //if (sdr["ActivirtyContent"] != DBNull.Value) emp.Add("ActivirtyContent", (string)sdr["ActivirtyContent"]);
                     
                     //if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
-                    emp.Add("ActivirtyRecommendWords", (string)sdr["PushIntro"]);
+                    emp.Add("ActivirtyRecommendWords", (string)sdr["ActIntro"]);
                     //if (sdr["originaldirx"] != DBNull.Value) emp.Add("originaldirx", (string)sdr["originaldirx"]);
                     //if (sdr["Taga"] != DBNull.Value) emp.Add("Taga", (string)sdr["Taga"]);
                     //if (sdr["Tagb"] != DBNull.Value) emp.Add("Tagb", (string)sdr["Tagb"]);
