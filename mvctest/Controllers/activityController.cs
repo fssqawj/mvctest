@@ -24,9 +24,9 @@ namespace mvctest.Controllers
             }
             return sqlop.get_activity_info((string)Session["username"]);
         }
-        public string get_exquisite(string btime, string etime)
+        public string get_exquisite(string btime, string etime, string src)
         {
-            return sqlop.get_exquisite(btime, etime);
+            return sqlop.get_exquisite(btime, etime, src);
         }
         public string get_activity_allmember(string actid)
         {
@@ -37,8 +37,13 @@ namespace mvctest.Controllers
            
             return sqlop.get_activity_bycnt(cnt, actid);
         }
-        public string get_activityx_info(int actid)
-        {           
+        public string get_activityx_info(int actid,string src)
+        {
+            sqlop.insert_DYClick(src);
+            if (Session["username"] == null)
+            {
+                return sqlop.get_activityx_info_nologin(actid);
+            }
             return sqlop.get_activityx_info((string)Session["username"],actid);
         }
         public string add_comment(int activity_id, string content)

@@ -19,7 +19,7 @@ namespace mvctest.dbop
     {
         public static void writeLog(string name,string logInfo)
         {
-            using (StreamWriter sw = new StreamWriter(@"WebSite_Log.txt", true))
+            using (StreamWriter sw = new StreamWriter(@"C:\WebSite\WebSite_Log.txt", true))
             {
                 sw.WriteLine(DateTime.Now.ToString() + " " + name + " " + logInfo);
             }
@@ -1072,7 +1072,120 @@ namespace mvctest.dbop
                 conn.Close();
             }
         }
-        public static string get_exquisite(string btime, string etime)
+
+        public static string get_activityx_info_nologin(int actid)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = " + actid.ToString() + " and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            int pv = 0, cv = 0;
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+                JObject emp = new JObject();
+
+                while (sdr.Read())
+                {
+                    if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
+                    else emp.Add("GroupID", "");
+                    if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
+                    if (sdr["OrganazationID"] != DBNull.Value) emp.Add("OrganazationID", (int)sdr["OrganazationID"]);
+                    if (sdr["OrganizationName"] != DBNull.Value) emp.Add("OrganizationName", (string)sdr["OrganizationName"]);
+                    if (sdr["ActivirtyContent"] != DBNull.Value) emp.Add("ActivirtyContent", (string)sdr["ActivirtyContent"]);
+                    if (sdr["PhotoDir"] != DBNull.Value) emp.Add("PhotoDir", (string)sdr["PhotoDir"]);
+                    if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
+                    if (sdr["logo"] != DBNull.Value) emp.Add("logo", (string)sdr["logo"]);
+                    if (sdr["originaldirx"] != DBNull.Value) emp.Add("originaldirx", (string)sdr["originaldirx"]);
+                    if (sdr["Taga"] != DBNull.Value) emp.Add("Taga", (string)sdr["Taga"]);
+                    if (sdr["Tagb"] != DBNull.Value) emp.Add("Tagb", (string)sdr["Tagb"]);
+                    if (sdr["Tagc"] != DBNull.Value) emp.Add("Tagc", (string)sdr["Tagc"]);
+                    if (sdr["ActivityTime"] != DBNull.Value) emp.Add("ActivityTime", ((DateTime)sdr["ActivityTime"]).ToString());
+                    if (sdr["Address"] != DBNull.Value) emp.Add("Address", (string)sdr["Address"]);
+                    if (sdr["Rate"] != DBNull.Value) emp.Add("Rate", (double)sdr["Rate"]);
+                    if (sdr["SchoolID"] != DBNull.Value) emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    if (sdr["SchoolName"] != DBNull.Value) emp.Add("SchoolName", (string)sdr["SchoolName"]);
+                    if (sdr["NeedEnroll"] != DBNull.Value) emp.Add("NeedEnroll", (int)sdr["NeedEnroll"]);
+                    if (sdr["girllim"] != DBNull.Value) emp.Add("girllim", (int)sdr["girllim"]);
+                    if (sdr["boylim"] != DBNull.Value) emp.Add("boylim", (int)sdr["boylim"]);
+                    if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
+                    if (sdr["Pv"] != DBNull.Value) emp.Add("Pv", (int)sdr["Pv"]);
+                    if (sdr["Cv"] != DBNull.Value) emp.Add("Cv", (int)sdr["Cv"]);
+                    pv = (int)sdr["Pv"]; cv = (int)sdr["Cv"];
+                    if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
+                }
+                conn.Close();
+                //cmd.CommandText = "select * from member_activity where loginid='" + loginid + "' and ActivityID = " + actid.ToString();
+                //conn.Open();
+                //sdr = cmd.ExecuteReader();
+                //if (sdr.Read())
+                //{
+
+
+                //    if (sdr["cjState"] != DBNull.Value) emp.Add("cjState", (int)sdr["cjState"]);
+
+                //}
+                //else
+                //{
+
+
+                //    emp.Add("cjState", 0);
+
+                //}
+                emp.Add("cjState", 0);
+                pv = pv + 1;
+                obj.Add(emp);
+                emp1.Add("activityx_info", obj);
+                conn.Close();
+                cmd.CommandText = "update activity set pv = " + pv + " where activityid = " + actid;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return emp1.ToString();
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("get_activityx_info_nologin", ee.Message.ToString());
+                return (ee.Message.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static void insert_DYClick(string src)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "insert into DYClick(src) values ('" + src + "')";
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                //return ;
+
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("insert_DYClick", ee.Message.ToString());
+                //return (ee.Message.ToString());
+                
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static string get_exquisite(string btime, string etime, string src)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
@@ -1085,13 +1198,14 @@ namespace mvctest.dbop
                 SqlDataReader sdr = cmd.ExecuteReader();
                 JArray obj = new JArray();
                 JObject emp1 = new JObject();
-                JObject emp = new JObject();
+                
 
                 while (sdr.Read())
                 {
+                    JObject emp = new JObject();
                     //if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
                     //else emp.Add("GroupID", "");
-                    emp.Add("ActivityID", (string)sdr["ActivityID"]);
+                    emp.Add("ActivityID", (int)sdr["ActivityID"]);
                     if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
                     //if (sdr["OrganazationID"] != DBNull.Value) emp.Add("OrganazationID", (int)sdr["OrganazationID"]);
                     //if (sdr["OrganizationName"] != DBNull.Value) emp.Add("OrganizationName", (string)sdr["OrganizationName"]);
@@ -1116,13 +1230,17 @@ namespace mvctest.dbop
                     //if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
                     //if (sdr["Pv"] != DBNull.Value) emp.Add("Pv", (int)sdr["Pv"]);
                     //if (sdr["Cv"] != DBNull.Value) emp.Add("Cv", (int)sdr["Cv"]);
-                    
+                    obj.Add(emp);
                     //if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
                 }
                 
                 
-                obj.Add(emp);
+                
                 emp1.Add("exquisite_info", obj);
+                conn.Close();
+                cmd.CommandText = "insert into ExquisiteClick(src) values('" + src + "')";
+                conn.Open();
+                cmd.ExecuteNonQuery();
                 conn.Close();
                 return emp1.ToString();
             }
@@ -1130,7 +1248,7 @@ namespace mvctest.dbop
 
             catch (System.Exception ee)
             {
-                writeLog("exquisite_info", ee.Message.ToString());
+                //writeLog("exquisite_info", ee.Message.ToString());
                 return (ee.Message.ToString());
             }
             finally
@@ -1648,9 +1766,9 @@ namespace mvctest.dbop
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "with A as (select * from member_activity where loginid = '" + loginid + "')select * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID in (select SchoolID from Member_School where LoginID = '" + loginid + "' and gzstate = 1) and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime > '" + acttime + "') order by activity.ActivityTime,activity.ActivityID";
-            int[] ac = new int[11];
+            int[] ac = new int[1100];
             int top = 0;
-            int[] cv = new int[11];
+            int[] cv = new int[1100];
             try
             {
                 conn.Open();
@@ -1775,9 +1893,9 @@ namespace mvctest.dbop
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "with A as (select * from member_activity where loginid = '" + loginid + "')select top 10 * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID = " + schoolid + " and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime > '" + acttime + "') order by activity.ActivityTime,activity.ActivityID";
-            int[] ac = new int[11];
+            int[] ac = new int[1100];
             int top = 0;
-            int[] cv = new int[11];
+            int[] cv = new int[1100];
             try
             {
                 conn.Open();
@@ -3108,7 +3226,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member SET md5pwd = '" + passwd + "' where loginid = '" + loginid + "'";
+            cmd.CommandText = "UPDATE Member SET loginpwd = '" + passwd + "' where loginid = '" + loginid + "'";
 
 
 
