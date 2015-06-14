@@ -1238,10 +1238,13 @@ namespace mvctest.dbop
                 
                 emp1.Add("exquisite_info", obj);
                 conn.Close();
-                cmd.CommandText = "insert into ExquisiteClick(src) values('" + src + "')";
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                if (src != null)
+                {
+                    cmd.CommandText = "insert into ExquisiteClick(src) values('" + src + "')";
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
                 return emp1.ToString();
             }
 

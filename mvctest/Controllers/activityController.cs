@@ -39,7 +39,7 @@ namespace mvctest.Controllers
         }
         public string get_activityx_info(int actid,string src)
         {
-            sqlop.insert_DYClick(src);
+            if(src != null)sqlop.insert_DYClick(src);
             if (Session["username"] == null)
             {
                 return sqlop.get_activityx_info_nologin(actid);
