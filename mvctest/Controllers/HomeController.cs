@@ -119,7 +119,15 @@ namespace mvctest.Controllers
             }
             return res;
         }
-        
+        public string select_school(int schid)
+        {
+            if (schid != null)
+            {
+                Session["schid"] = schid;
+                return "true";
+            }
+            return "false";
+        }
         public string login(string name, string passwd)
         {
             string s = Request.UserHostAddress;
@@ -371,6 +379,23 @@ namespace mvctest.Controllers
             if (sqlop.add_fankui((string)Session["username"], content)) return "true";
             return "false";
         }
+        public string c5regcode(string name)
+        {
+            string infcode = "";
+            Random ran = new Random();
+
+            for (int i = 0; i < 4; i++)
+            {
+                infcode += ran.Next(0, 9);
+            }
+            string content = "【社友】您的验证码是" + infcode +"，本验证码5分钟内有效。如非本人操作，请忽略本短信。";
+            //POST
+            StringBuilder sbTemp = new StringBuilder();
+            sbTemp.Append("apikey=064419cd24b39f197c0275354be8e0db&username=yylwl&password=ml150615&mobile=" + name + "&content=" + content);
+            byte[] bTemp = System.Text.Encoding.GetEncoding("GBK").GetBytes(sbTemp.ToString());
+            String result = PostRequest("http://m.5c.com.cn/api/send/?", bTemp);
+            return result.ToString();
+        }
         public string regcode(  string name )
         {
             if (sqlop.reg_already(name))
@@ -565,5 +590,47 @@ namespace mvctest.Controllers
         {
             return sqlop.tg_calcdl(ck, schoolid, qd, client);
         }
+
+        private static String PostRequest(string url, byte[] bData)
+        {
+            System.Net.HttpWebRequest hwRequest;
+            System.Net.HttpWebResponse hwResponse;
+
+            string strResult = string.Empty;
+            try
+            {
+                hwRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                hwRequest.Timeout = 5000;
+                hwRequest.Method = "POST";
+                hwRequest.ContentType = "application/x-www-form-urlencoded";
+                hwRequest.ContentLength = bData.Length;
+
+                System.IO.Stream smWrite = hwRequest.GetRequestStream();
+                smWrite.Write(bData, 0, bData.Length);
+                smWrite.Close();
+            }
+            catch (System.Exception err)
+            {
+                return (err.ToString());
+                //return strResult;
+            }
+
+            //get response
+            try
+            {
+                hwResponse = (HttpWebResponse)hwRequest.GetResponse();
+                StreamReader srReader = new StreamReader(hwResponse.GetResponseStream(), Encoding.ASCII);
+                strResult = srReader.ReadToEnd();
+                srReader.Close();
+                hwResponse.Close();
+            }
+            catch (System.Exception err)
+            {
+                return (err.ToString());
+            }
+
+            return strResult;
+        }
+
     }
 }

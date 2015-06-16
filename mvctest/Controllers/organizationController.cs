@@ -34,6 +34,17 @@ namespace mvctest.Controllers
         {
             return sqlop.get_org_web(classid, schoolid);
         }
+        public string get_org_session_web(int classid)
+        {
+            if (Session["schid"] != null)
+            {
+                return sqlop.get_org_web(classid, (int)Session["schid"]);
+            }
+            else
+            {
+                return "false";
+            }
+        }
         public string get_org_byrate(double rate, int orgid)
         {
             if (Session["username"] == null)

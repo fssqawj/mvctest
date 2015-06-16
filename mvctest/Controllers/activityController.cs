@@ -16,8 +16,16 @@ namespace mvctest.Controllers
     {
         //
         // GET: /activity/
+        public string ctest()
+        {
+            string cok = Request.Cookies["schid"].Value;
+            //string sch = Request.Cookies["schid"].Value;
+            return cok;
+        }
         public string get_activity_info()
         {
+            //HttpCookie cok = Request.Cookies[];
+            
             if (Session["username"] == null)
             {
                 return "false";
@@ -121,7 +129,17 @@ namespace mvctest.Controllers
             return sqlop.get_actx_all((string)Session["username"], actid, acttime);
         }
 
-
+        public string get_session_sch_act()
+        {
+            if (Session["schid"] != null)
+            {
+                return sqlop.get_act_byschid((int)Session["schid"]);
+            }
+            else
+            {
+                return "false";
+            }
+        }
         public string get_sch_act(int schoolid)
         {
 
