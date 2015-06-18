@@ -124,9 +124,18 @@ namespace mvctest.Controllers
             if (schid != null)
             {
                 Session["schid"] = schid;
+
                 return "true";
             }
             return "false";
+        }
+        public string get_session_schidandname()
+        {
+            if (Session["schid"] == null)
+            {
+                return sqlop.get_session_schidandname(0);
+            }
+            else return sqlop.get_session_schidandname((int)Session["schid"]);
         }
         public string login(string name, string passwd)
         {

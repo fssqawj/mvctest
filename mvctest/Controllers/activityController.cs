@@ -133,7 +133,7 @@ namespace mvctest.Controllers
         {
             if (Session["schid"] != null)
             {
-                return sqlop.get_act_byschid((int)Session["schid"]);
+                return sqlop.get_session_act_byschid((int)Session["schid"]);
             }
             else
             {

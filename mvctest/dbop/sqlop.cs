@@ -1898,6 +1898,69 @@ namespace mvctest.dbop
             }
             return emp1.ToString();
         }
+
+        public static string get_session_act_byschid(int schid)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from Activity as A left outer join Organazation as B on A.OrganazationID = B.OrganizationID left outer join School as C on B.SchoolID = C.SchoolID where C.SchoolID = " + schid + " and A.ActivityTime > getdate()";
+            JObject emp1 = new JObject();
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+
+
+                while (sdr.Read())
+                {
+                    JObject emp = new JObject();
+                    if (sdr["ActivityID"] != DBNull.Value) emp.Add("ActivityID", (int)sdr["ActivityID"]);
+
+                    if (sdr["OrganazationID"] != DBNull.Value) emp.Add("OrganazationID", (int)sdr["OrganazationID"]);
+                    if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
+                    if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
+
+                    //if (sdr["ActivirtyContent"] != DBNull.Value) emp.Add("ActivirtyContent", (string)sdr["ActivirtyContent"]);
+                    if (sdr["OrganizationName"] != DBNull.Value) emp.Add("OrganizationName", (string)sdr["OrganizationName"]);
+                    if (sdr["Address"] != DBNull.Value) emp.Add("Address", (string)sdr["Address"]);
+                    if (sdr["Rate"] != DBNull.Value) emp.Add("Rate", (double)sdr["Rate"]);
+                    if (sdr["PhotoDir"] != DBNull.Value) emp.Add("PhotoDir", (string)sdr["PhotoDir"]);
+                    if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
+                    if (sdr["logo"] != DBNull.Value) emp.Add("logo", (string)sdr["logo"]);
+                    if (sdr["originaldirx"] != DBNull.Value) emp.Add("originaldirx", (string)sdr["originaldirx"]);
+                    if (sdr["SchoolID"] != DBNull.Value) emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    if (sdr["SchoolName"] != DBNull.Value) emp.Add("SchoolName", (string)sdr["SchoolName"]);
+
+                    if (sdr["girllim"] != DBNull.Value) emp.Add("girllim", (int)sdr["girllim"]);
+                    if (sdr["boylim"] != DBNull.Value) emp.Add("boylim", (int)sdr["boylim"]);
+                    if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
+                    if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
+                    if (sdr["Pv"] != DBNull.Value) emp.Add("Pv", (int)sdr["Pv"]);
+                    if (sdr["Cv"] != DBNull.Value) emp.Add("Cv", (int)sdr["Cv"]);
+
+                    if (sdr["ActivityTime"] != DBNull.Value) emp.Add("ActivityTime", ((DateTime)sdr["ActivityTime"]).ToString());
+                    emp.Add("cjstate", 0);
+                    obj.Add(emp);
+                    //return emp.ToString();
+                }
+
+                emp1.Add("sch_act_info", obj);
+            }
+            catch (System.Exception ee)
+            {
+                writeLog("get_act_byschid", ee.Message.ToString());
+                return (ee.Message.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return emp1.ToString();
+        }
+
+
         public static string get_sch_act(int schoolid)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -3519,13 +3582,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     else emp.Add("photo", "tidai.jpg");
                     if (sdr["regtime"] != DBNull.Value)
                     {
-                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToShortDateString());
+                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToString());
                         if (DateTime.Compare((DateTime)sdr["regtime"], DateTime.Parse("2015-04-15")) < 0) emp.Add("needsch", 1);
                         else emp.Add("needsch", 0);
                     }
                     else
                     {
-                        emp.Add("regtime", "2014-7-1");
+                        emp.Add("regtime", "2014/7/1 00:00:00");
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
@@ -3606,13 +3669,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     else emp.Add("photo", "tidai.jpg");
                     if (sdr["regtime"] != DBNull.Value)
                     {
-                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToShortDateString());
+                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToString());
                         if (DateTime.Compare((DateTime)sdr["regtime"], DateTime.Parse("2015-04-15")) < 0) emp.Add("needsch", 1);
                         else emp.Add("needsch", 0);
                     }
                     else
                     {
-                        emp.Add("regtime", "2014-7-1");
+                        emp.Add("regtime", "2014/7/1 00:00:00");
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
@@ -3693,13 +3756,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     else emp.Add("photo", "tidai.jpg");
                     if (sdr["regtime"] != DBNull.Value)
                     {
-                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToShortDateString());
+                        emp.Add("regtime", ((DateTime)sdr["regtime"]).ToString());
                         if (DateTime.Compare((DateTime)sdr["regtime"], DateTime.Parse("2015-04-15")) < 0) emp.Add("needsch", 1);
                         else emp.Add("needsch", 0);
                     }
                     else
                     {
-                        emp.Add("regtime", "2014-7-1");
+                        emp.Add("regtime", "2014/7/1 00:00:00");
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
@@ -3852,7 +3915,45 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 conn.Close();
             }
         }
+        public static string get_session_schidandname(int schid)
+        {
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from school where schoolid = " + schid;
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+                JObject emp = new JObject();
+                if (sdr.Read())
+                {
+                    emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    emp.Add("SchoolName", (string)sdr["SchoolName"]);
+                    obj.Add(emp);
+                }
+                else
+                {
+                    emp.Add("SchoolID", 0);
+                    emp.Add("SchoolName", "null");
+                    obj.Add(emp);
+                }
 
+                emp1.Add("schidandname", obj);
+                return emp1.ToString();
+            }
+            catch (System.Exception ee)
+            {
+                writeLog("tg_count", ee.Message.ToString());
+                return (ee.Message.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public static string wxlogin(string openid, string ipadr)
         {
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
