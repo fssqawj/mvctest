@@ -124,7 +124,7 @@ namespace mvctest.Controllers
             if (schid != null)
             {
                 Session["schid"] = schid;
-
+                Session.Timeout = 30;
                 return "true";
             }
             return "false";
@@ -133,7 +133,9 @@ namespace mvctest.Controllers
         {
             if (Session["schid"] == null)
             {
+                Session["schid"] = 12;
                 return sqlop.get_session_schidandname(0);
+                
             }
             else return sqlop.get_session_schidandname((int)Session["schid"]);
         }
@@ -141,14 +143,14 @@ namespace mvctest.Controllers
         {
             string s = Request.UserHostAddress;
             
-            Session.Timeout = 30;
+            
             string result = sqlop.login(name, passwd, s);
             if (result != "false")
             {
 
                 Session["username"] = name;
                 Session["passwd"] = passwd;
-                
+                Session.Timeout = 30;
                 return result;
             }
             return "false";
@@ -158,7 +160,7 @@ namespace mvctest.Controllers
         {
             string s = Request.UserHostAddress;
 
-            Session.Timeout = 30;
+            
             string result;
             if (leanid != null)
             {
@@ -170,6 +172,7 @@ namespace mvctest.Controllers
 
                 Session["username"] = name;
                 Session["passwd"] = passwd;
+                Session.Timeout = 30;
 
                 return result;
             }
@@ -509,6 +512,20 @@ namespace mvctest.Controllers
             else
                 return "wrong code";
         }
+
+        public string find_password_md5(string rinfcode, string passwd)
+        {
+            string code = (string)((userinfo)(Session["infcode"])).infcode;
+            string name = (string)((userinfo)(Session["infcode"])).name;
+            if (rinfcode == code)
+            {
+                if (sqlop.change_passwd_md5(name, passwd)) return "true";
+                return "false";
+            }
+            else
+                return "wrong code";
+        }
+
         public string regx(string rinfcode,string passwd,string nickname,int schid,int sex )
         {
 

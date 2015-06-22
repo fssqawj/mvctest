@@ -24,9 +24,18 @@ namespace mvctest.dbop
                 sw.WriteLine(DateTime.Now.ToString() + " " + name + " " + logInfo);
             }
         }
+
+        public static void writeLog_api(string name, string logInfo)
+        {
+            using (StreamWriter sw = new StreamWriter(@"C:\WebSite\WebSite_Log_API.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + name + " " + logInfo);
+            }
+        }
         #region  吐槽
         public static string search_all_tucao_info(string loginid,int ID)
         {
+            writeLog_api("search_all_tucao_info", "loginid:" + loginid + " ID:" + ID);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -61,7 +70,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("search_all_tucao_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -72,6 +81,7 @@ namespace mvctest.dbop
         }
         public static string get_tucao_bycnt(int tucaoid,int cnt)
         {
+            writeLog_api("get_tucao_bycnt", "tucaoid:" + tucaoid + " cnt:" + cnt);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -104,7 +114,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_tucao_bycnt", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -115,6 +125,7 @@ namespace mvctest.dbop
         }
         public static string get_tucao_all_comment(int tucaoid)
         {
+            writeLog_api("get_tucao_all_comment", "tucaoid:" + tucaoid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -143,7 +154,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_tucao_all_comment", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -152,6 +163,7 @@ namespace mvctest.dbop
         }
         public static bool insert_tucao(string loginid, string content)
         {
+            writeLog_api("insert_tucao", "loginid:" + loginid + " content:" + content);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -168,7 +180,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("insert_tucao", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -194,7 +206,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("delete_tucao", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -219,7 +231,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("insert_comment", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -284,7 +296,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("delete_zan", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -331,7 +343,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_jianzhi_all_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -378,7 +390,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_jianzhi_class_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -420,7 +432,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_jianzhix_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -445,7 +457,7 @@ namespace mvctest.dbop
 
         //    catch (System.Exception ee)
         //    {
-        //        //return (ee.Message.ToString());
+        //        //return "false";
         //        return false;
         //    }
         //    finally
@@ -494,7 +506,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_ershou_all_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -539,7 +551,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_ershou_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -583,7 +595,7 @@ namespace mvctest.dbop
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -607,7 +619,7 @@ namespace mvctest.dbop
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -632,7 +644,7 @@ namespace mvctest.dbop
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -644,11 +656,12 @@ namespace mvctest.dbop
         #region 活动
         public static string get_activity_info(string loginid)
         {
+            writeLog_api("get_activity_info", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "with A AS (select * from Member_Activity where loginID=" + loginid + ")select * from Member_Organazation inner join activity on Member_Organazation.OrganazationID = Activity.OrganazationID inner join Organazation on Member_Organazation.OrganazationID = Organazation.OrganizationID left outer join A on A.ActivityID = Activity.ActivityID  left outer join school on Organazation.schoolid = school.schoolid where Member_Organazation.LoginID = '" + loginid + "' and activity.activitytime > GETDATE() and member_organazation.gzstate=1";
-           
+            cmd.CommandText = "with A AS (select * from Member_Activity where loginID=@loginid)select * from Member_Organazation inner join activity on Member_Organazation.OrganazationID = Activity.OrganazationID inner join Organazation on Member_Organazation.OrganazationID = Organazation.OrganizationID left outer join A on A.ActivityID = Activity.ActivityID  left outer join school on Organazation.schoolid = school.schoolid where Member_Organazation.LoginID = @loginid and activity.activitytime > GETDATE() and member_organazation.gzstate=1";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
             try
             {
                 conn.Open();
@@ -688,7 +701,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activity_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -697,11 +710,12 @@ namespace mvctest.dbop
         }
         public static string get_activity_allmember(string actid)
         {
+            writeLog_api("get_activity_allmember", "actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Member_Activity,Member where Member_Activity.LoginID = Member.LoginID and Member_Activity.cjstate = 1 and Member_Activity.ActivityID = " + actid;
-
+            cmd.CommandText = "select * from Member_Activity,Member where Member_Activity.LoginID = Member.LoginID and Member_Activity.cjstate = 1 and Member_Activity.ActivityID = @actid";
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -731,7 +745,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activity_allmember", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -740,11 +754,12 @@ namespace mvctest.dbop
         }
         public static string get_actx_comment(int actid)
         {
+            writeLog_api("get_actx_comment", "actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Activity_Comment left join member on activity_comment.loginid=member.loginid where ActivityID = " + actid.ToString();
-
+            cmd.CommandText = "select * from Activity_Comment left join member on activity_comment.loginid=member.loginid where ActivityID = @actid";
+            cmd.Parameters.Add("actid", actid);
             try
             {
                 conn.Open();
@@ -773,7 +788,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_actx_comment", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -784,11 +799,13 @@ namespace mvctest.dbop
         
         public static string get_member_info(string loginid,string mid)
         {
+            writeLog_api("get_member_info", "loginid:" + loginid + " mid:" + mid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Member where LoginID = " + mid;
-
+            cmd.CommandText = "select * from Member where LoginID = @mid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("mid", mid));
             try
             {
                 conn.Open();
@@ -813,7 +830,7 @@ namespace mvctest.dbop
                 }
                 emp1.Add("mem_info", obj);
                 conn.Close();
-                cmd.CommandText = "select * from Member_Activity ,activity,organazation, school where member_activity.ActivityID = Activity.ActivityID and activity.OrganazationID = organazation.OrganizationID and organazation.SchoolID = school.SchoolID and Member_Activity.cjstate = 1 and Member_Activity.LoginID=" + mid;
+                cmd.CommandText = "select * from Member_Activity ,activity,organazation, school where member_activity.ActivityID = Activity.ActivityID and activity.OrganazationID = organazation.OrganizationID and organazation.SchoolID = school.SchoolID and Member_Activity.cjstate = 1 and Member_Activity.LoginID=@mid";
                 conn.Open();
                 sdr = cmd.ExecuteReader();
                 JArray objx = new JArray();
@@ -847,7 +864,7 @@ namespace mvctest.dbop
                 }
                 emp1.Add("act_info", objx);
                 conn.Close();
-                cmd.CommandText = "select * from guanzhu where user1='" + loginid + "' and user2 = '" + mid + "'";
+                cmd.CommandText = "select * from guanzhu where user1=@loginid and user2 = @mid";
                 conn.Open();
                 sdr = cmd.ExecuteReader();
                 JArray objxm = new JArray();
@@ -868,7 +885,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_member_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -879,11 +896,12 @@ namespace mvctest.dbop
         
         public static string get_connect_info(string mid)
         {
+            writeLog_api("get_connect_info","mid:" + mid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Member ,guanzhu where (Member.LoginID = guanzhu.user2) and guanzhu.state = 1 and guanzhu.user1 = " + mid;
-
+            cmd.CommandText = "select * from Member ,guanzhu where (Member.LoginID = guanzhu.user2) and guanzhu.state = 1 and guanzhu.user1 = @mid";
+            cmd.Parameters.Add(new SqlParameter("mid", mid));
             try
             {
                 conn.Open();
@@ -905,7 +923,7 @@ namespace mvctest.dbop
                 }
                 sdr.Close();
                 conn.Close();
-                cmd.CommandText = "select * from Member ,guanzhu where (Member.LoginID = guanzhu.user1) and guanzhu.state = 1 and guanzhu.user2 = " + mid;
+                cmd.CommandText = "select * from Member ,guanzhu where (Member.LoginID = guanzhu.user1) and guanzhu.state = 1 and guanzhu.user2 = @mid";
                 conn.Open();
                 SqlDataReader sdrx = cmd.ExecuteReader();
 
@@ -930,7 +948,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_connect_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -940,10 +958,13 @@ namespace mvctest.dbop
         }        
         public static string get_activity_bycnt(int cnt, int actid)
         {
+            writeLog_api("get_activity_bycnt", "cnt:" + cnt + " actid" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select top 10 * from Activity  inner join organazation   on Activity.OrganazationID=organazation.OrganizationID where Activity.CountMember< " + cnt + " or (Activity.CountMember =  " + cnt + " and Activity.activityid > " + actid + ")order by Activity.CountMember DESC,Activity.ActivityID";
+            cmd.CommandText = "select top 10 * from Activity  inner join organazation   on Activity.OrganazationID=organazation.OrganizationID where Activity.CountMember< @cnt or (Activity.CountMember =  @cnt and Activity.activityid > @actid)order by Activity.CountMember DESC,Activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("cnt", cnt));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -981,7 +1002,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activity_bycnt", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -991,10 +1012,13 @@ namespace mvctest.dbop
         }
         public static string get_activityx_info(string loginid,int actid)
         {
+            writeLog_api("get_activityx_info", "loginid:" + loginid + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = " + actid.ToString() + " and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = @actid and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             int pv = 0,cv = 0;
             try
             {
@@ -1034,7 +1058,7 @@ namespace mvctest.dbop
                     if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]); 
                 }
                 conn.Close();
-                cmd.CommandText = "select * from member_activity where loginid='"+loginid+"' and ActivityID = " + actid.ToString();
+                cmd.CommandText = "select * from member_activity where loginid=@loginid and ActivityID = @actid";
                 conn.Open();
                 sdr = cmd.ExecuteReader();
                 if (sdr.Read())
@@ -1055,7 +1079,7 @@ namespace mvctest.dbop
                 obj.Add(emp);
                 emp1.Add("activityx_info", obj);
                 conn.Close();
-                cmd.CommandText = "update activity set pv = " + pv + " where activityid = " + actid;
+                cmd.CommandText = "update activity set pv = " + pv + " where activityid = @actid";
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 return emp1.ToString();
@@ -1065,7 +1089,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activityx_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1075,10 +1099,12 @@ namespace mvctest.dbop
 
         public static string get_activityx_info_nologin(int actid)
         {
+            writeLog_api("get_activityx_info_nologin", "actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = " + actid.ToString() + " and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = @actid and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             int pv = 0, cv = 0;
             try
             {
@@ -1140,7 +1166,7 @@ namespace mvctest.dbop
                 obj.Add(emp);
                 emp1.Add("activityx_info", obj);
                 conn.Close();
-                cmd.CommandText = "update activity set pv = " + pv + " where activityid = " + actid;
+                cmd.CommandText = "update activity set pv = " + pv + " where activityid = @actid";
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 return emp1.ToString();
@@ -1150,7 +1176,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activityx_info_nologin", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1158,12 +1184,15 @@ namespace mvctest.dbop
             }
         }
 
-        public static void insert_DYClick(string src)
+        public static void insert_DYClick(string src,int actid)
         {
+            writeLog_api("insert_DYClick", "src:" + src + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "insert into DYClick(src) values ('" + src + "')";
+            cmd.CommandText = "insert into DYClick(src,ActivityID) values (@src,@actid)";
+            cmd.Parameters.Add(new SqlParameter("src", src));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -1176,7 +1205,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("insert_DYClick", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 
             }
             finally
@@ -1185,12 +1214,77 @@ namespace mvctest.dbop
             }
         }
 
-        public static string get_exquisite(string btime, string etime, string src)
+        public static void insert_JPClick(string src, int actid)
         {
+            writeLog_api("insert_JPClick", "src:" + src + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from activity ,ORGANAZATION,school,ExquisitePush where activity.activitytime > '" + btime + "' and activity.activitytime < '" + etime + "' and activity.isexquisite = 1 and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID and activity.activityid = ExquisitePush.activityid";
+            
+            if(src == "IOS")cmd.CommandText = "update ExquisitePush set iosClick = iosClick + 1 where ActivityID = @actid";
+            else cmd.CommandText = "update ExquisitePush set andClick = andClick + 1 where ActivityID = @actid";
+            cmd.Parameters.Add(new SqlParameter("src", src));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                //return ;
+
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("insert_JPClick", ee.Message.ToString());
+                //return "false";
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public static bool click_jppush(string src, int pushid)
+        {
+            writeLog_api("click_jppush", "src:" + src + " pushid:" + pushid);
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "insert into ExquisiteClick(src,PushID) values (@src,@pushid)";
+            cmd.Parameters.Add(new SqlParameter("src", src));
+            cmd.Parameters.Add(new SqlParameter("pushid", pushid));
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                //return ;
+
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("click_jppush", ee.Message.ToString());
+                //return "false";
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
+        }
+        public static string get_exquisite(string btime, string etime, string src)
+        {
+            writeLog_api("get_exquisite", "btime:" + btime + " etime:" + etime + " src:" + src);
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school,ExquisitePush where activity.activitytime > @btime and activity.activitytime < @etime and activity.isexquisite = 1 and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID and activity.activityid = ExquisitePush.activityid";
+            cmd.Parameters.Add(new SqlParameter("btime", btime));
+            cmd.Parameters.Add(new SqlParameter("etime", etime));
+            cmd.Parameters.Add(new SqlParameter("src", src));
             int pv = 0, cv = 0;
             try
             {
@@ -1240,7 +1334,7 @@ namespace mvctest.dbop
                 conn.Close();
                 if (src != null)
                 {
-                    cmd.CommandText = "insert into ExquisiteClick(src) values('" + src + "')";
+                    cmd.CommandText = "insert into ExquisiteClick(src) values(@src)";
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
@@ -1251,20 +1345,101 @@ namespace mvctest.dbop
 
             catch (System.Exception ee)
             {
-                //writeLog("exquisite_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                writeLog("exquisite_info", ee.Message.ToString());
+                return "false";
             }
             finally
             {
                 conn.Close();
             }
         }
-        public static string get_member_actx(string loginid, int actid)
+        public static string get_exquisite_bypushid(int pushid, string src)
         {
+            writeLog_api("get_exquisite_bypushid", "pushid:" + pushid + " src:" + src);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = " + actid.ToString() + " and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school,ExquisitePush where Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID and activity.activityid = ExquisitePush.activityid and ExquisitePush.IsPushed = 1 and ExquisitePush.PushID = @pushid";
+            cmd.Parameters.Add(new SqlParameter("pushid", pushid));
+            cmd.Parameters.Add(new SqlParameter("src", src));
+            int pv = 0, cv = 0;
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+
+
+                while (sdr.Read())
+                {
+                    JObject emp = new JObject();
+                    //if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
+                    //else emp.Add("GroupID", "");
+                    emp.Add("ActivityID", (int)sdr["ActivityID"]);
+                    if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
+                    //if (sdr["OrganazationID"] != DBNull.Value) emp.Add("OrganazationID", (int)sdr["OrganazationID"]);
+                    //if (sdr["OrganizationName"] != DBNull.Value) emp.Add("OrganizationName", (string)sdr["OrganizationName"]);
+                    //if (sdr["ActivirtyContent"] != DBNull.Value) emp.Add("ActivirtyContent", (string)sdr["ActivirtyContent"]);
+
+                    //if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
+                    emp.Add("ActivirtyRecommendWords", (string)sdr["ActIntro"]);
+                    //if (sdr["originaldirx"] != DBNull.Value) emp.Add("originaldirx", (string)sdr["originaldirx"]);
+                    //if (sdr["Taga"] != DBNull.Value) emp.Add("Taga", (string)sdr["Taga"]);
+                    //if (sdr["Tagb"] != DBNull.Value) emp.Add("Tagb", (string)sdr["Tagb"]);
+                    //if (sdr["Tagc"] != DBNull.Value) emp.Add("Tagc", (string)sdr["Tagc"]);
+
+                    if (sdr["Address"] != DBNull.Value) emp.Add("Address", (string)sdr["Address"]);
+                    if (sdr["PhotoDir"] != DBNull.Value) emp.Add("ActivityImage", (string)sdr["PhotoDir"]);
+                    //if (sdr["Rate"] != DBNull.Value) emp.Add("Rate", (double)sdr["Rate"]);
+                    if (sdr["SchoolID"] != DBNull.Value) emp.Add("SchoolID", (int)sdr["SchoolID"]);
+                    if (sdr["SchoolName"] != DBNull.Value) emp.Add("SchoolName", (string)sdr["SchoolName"]);
+                    if (sdr["ActivityTime"] != DBNull.Value) emp.Add("ActivityTime", ((DateTime)sdr["ActivityTime"]).ToString());
+                    //if (sdr["NeedEnroll"] != DBNull.Value) emp.Add("NeedEnroll", (int)sdr["NeedEnroll"]);
+                    //if (sdr["girllim"] != DBNull.Value) emp.Add("girllim", (int)sdr["girllim"]);
+                    //if (sdr["boylim"] != DBNull.Value) emp.Add("boylim", (int)sdr["boylim"]);
+                    //if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
+                    //if (sdr["Pv"] != DBNull.Value) emp.Add("Pv", (int)sdr["Pv"]);
+                    //if (sdr["Cv"] != DBNull.Value) emp.Add("Cv", (int)sdr["Cv"]);
+                    obj.Add(emp);
+                    //if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
+                }
+
+
+
+                emp1.Add("exquisite_info", obj);
+                conn.Close();
+                if (src != null)
+                {
+                    cmd.CommandText = "insert into ExquisiteClick(src,PushID) values (@src,@pushid)";
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                return emp1.ToString();
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("get_exquisite_bypushid", ee.Message.ToString());
+                return "false";
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static string get_member_actx(string loginid, int actid)
+        {
+            writeLog_api("get_member_actx", "loginid:" + loginid + " actid:" + actid);
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from activity ,ORGANAZATION,school where ActivityID = @actid and Activity.OrganazationID = ORGANAZATION.OrganizationID and ORGANAZATION.SchoolID = School.SchoolID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             int pv = 0, cv = 0;
             try
             {
@@ -1304,7 +1479,7 @@ namespace mvctest.dbop
                     if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
                 }
                 conn.Close();
-                cmd.CommandText = "select * from member_activity where loginid='" + loginid + "' and ActivityID = " + actid.ToString();
+                cmd.CommandText = "select * from member_activity where loginid=@loginid and ActivityID = @actid";
                 conn.Open();
                 sdr = cmd.ExecuteReader();
                 if (sdr.Read())
@@ -1325,7 +1500,7 @@ namespace mvctest.dbop
                 obj.Add(emp);
                 emp1.Add("member_actx_info", obj);
                 conn.Close();
-                cmd.CommandText = "update activity set pv = " + pv + " where activityid = " + actid;
+                cmd.CommandText = "update activity set pv = " + pv + " where activityid = @actid";
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 return emp1.ToString();
@@ -1335,7 +1510,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_activityx_info", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1345,10 +1520,13 @@ namespace mvctest.dbop
 
         public static bool add_activity_cj(string loginid,int actid)
         {
+            writeLog_api("add_activity_cj", "loginid:" + loginid + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Member_Activity where activityid = " + actid + " and LoginID = '" + loginid + "'";
+            cmd.CommandText = "select * from Member_Activity where activityid = @actid and LoginID = @loginid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             string sstime = DateTime.Now.ToString();
             try
             {
@@ -1357,20 +1535,22 @@ namespace mvctest.dbop
                 if (sdr.Read() == false)
                 {
                     conn.Close();
+                   
+                    //cmd = conn.CreateCommand();
+                    cmd.CommandText = "insert into Member_Activity(ActivityID,LoginID,cjState,cjtime) values (@actid,@loginid,1,getdate())";
                     conn.Open();
-                    cmd = conn.CreateCommand();
-                    cmd.CommandText = "insert into Member_Activity(ActivityID,LoginID,cjState,cjtime) values (" + actid + ",'" + loginid + "',1,'"+sstime+"')";
                     cmd.ExecuteNonQuery();
                 }
                 else
                 {
                     conn.Close();
+                    
+                    //cmd = conn.CreateCommand();
+                    cmd.CommandText = "update Member_Activity set cjstate = 1, cjtime=getdate() where LoginID=@loginid and activityid = @actid";
                     conn.Open();
-                    cmd = conn.CreateCommand();
-                    cmd.CommandText = "update Member_Activity set cjstate = 1, cjtime='"+sstime+"' where LoginID='" + loginid + "' and activityid = " + actid + "";
                     cmd.ExecuteNonQuery();
                 }
-                return true;
+                
             }
             catch (System.Exception ee)
             {
@@ -1381,14 +1561,18 @@ namespace mvctest.dbop
             {
                 conn.Close();
             }
+            return true;
         }
 
         public static string hasEnroll(string loginid, int actid)
         {
+            writeLog_api("hasEnroll", "loginid:" + loginid + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from EnrollInfo where loginID = '" + loginid + "' and ActID = " + actid.ToString();
+            cmd.CommandText = "select * from EnrollInfo where loginID = @loginid and ActID = @actid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -1413,7 +1597,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("hasEnroll", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return "false";
             }
             finally
@@ -1424,10 +1608,18 @@ namespace mvctest.dbop
 
         public static bool addEnrollInfo(string loginid, int actid, string name, string phone,string major,string grade,int sex)
         {
+            writeLog_api("addEnrollInfo", "loginid:" + loginid + " actid:" + actid + " name:" + name + " phone:" + phone + " major:" + major + " grade:" + grade + " sex:" + sex);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "insert into EnrollInfo(ActID,loginID,name,phone,major,grade,sex) values(" + actid + ",'" + loginid + "','" + name + "','" + phone + "','" + major + "','" + grade + "'," + sex + ")";
+            cmd.CommandText = "insert into EnrollInfo(ActID,loginID,name,phone,major,grade,sex) values(@actid,@loginid,@name,@phone,@major,@grade,@sex)";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("major", major));
+            cmd.Parameters.Add(new SqlParameter("grade", grade));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
             try
             {
                 conn.Open();
@@ -1440,7 +1632,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("addEnrollInfo", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -1450,10 +1642,18 @@ namespace mvctest.dbop
         }
         public static bool updateEnrollInfo(string loginid, int actid, string name, string phone, string major, string grade, int sex)
         {
+            writeLog_api("updateEnrollInfo", "loginid:" + loginid + " actid:" + actid + " name:" + name + " phone:" + phone + " major:" + major + " grade:" + grade + " sex:" + sex);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "update EnrollInfo set name = '" + name + "',phone = '" + phone + "',major = '" + major + "',grade = '" + grade + "',sex = " + sex; 
+            cmd.CommandText = "update EnrollInfo set name = @name,phone = @phone,major = @major,grade = @grade,sex = @sex where loginid = @loginid and actid = @actid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("major", major));
+            cmd.Parameters.Add(new SqlParameter("grade", grade));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
             try
             {
                 conn.Open();
@@ -1465,7 +1665,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("updateEnrollInfo", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -1475,10 +1675,13 @@ namespace mvctest.dbop
         }
         public static bool deleteEnollInfo(string loginid, int actid)
         {
+            writeLog_api("deleteEnollInfo", "loginid:" + loginid + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "delete from EnrollInfo where ActID = " + actid + " and loginID = '" + loginid + "'";
+            cmd.CommandText = "delete from EnrollInfo where ActID = @actid and loginID = @loginid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -1490,7 +1693,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("deleteEnollInfo", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -1500,10 +1703,13 @@ namespace mvctest.dbop
         }
         public static bool delete_activity_cj(string loginid, int actid)
         {
+            writeLog_api("delete_activity_cj", "loginid:" + loginid + " actid:" + actid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "update Member_Activity set cjstate = 0 where LoginID='" + loginid + "' and activityid = " + actid + "";
+            cmd.CommandText = "update Member_Activity set cjstate = 0 where LoginID=@loginid and activityid = @actid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
             try
             {
                 conn.Open();
@@ -1515,7 +1721,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("delete_activity_cj", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -1526,11 +1732,15 @@ namespace mvctest.dbop
 
         public static bool add_activity_comment(string loginid, int actid, string content)
         {
+            writeLog_api("add_activity_comment", "loginid:" + loginid + " actid:" + actid + " content:" + content);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             string sstime = DateTime.Now.ToString();
-            cmd.CommandText = "insert into Activity_Comment (ActivityID,LoginID,CommentContent,CommentTime) values(" + actid + ",'" + loginid + "','" + content + "','" + sstime + "')";       
+            cmd.CommandText = "insert into Activity_Comment (ActivityID,LoginID,CommentContent,CommentTime) values(@actid,@loginid,@content,getdate())";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("content", content));
             try
             {
                 conn.Open();
@@ -1571,10 +1781,14 @@ namespace mvctest.dbop
         //}
         public static bool add_activity_rate(string loginid, int actid, float rate)
         {
+            writeLog_api("add_activity_rate", "loginid:" + loginid + " actid:" + actid + " rate:" + rate);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member_Activity SET rate = " + rate + " where activityid = " + actid + " and LoginID = '" + loginid + "' ";
+            cmd.CommandText = "UPDATE Member_Activity SET rate = @rate where activityid = @actid and LoginID = @loginid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("rate", rate));
             try
             {
                 conn.Open();
@@ -1595,11 +1809,12 @@ namespace mvctest.dbop
         }
         public static string get_relatedschool(int schoolid)
         {
+            writeLog_api("get_relatedschool", "schoolid:" + schoolid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from RelateSchool where SchoolID = " + schoolid;
-
+            cmd.CommandText = "select * from RelateSchool where SchoolID = @schoolid";
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
             try
             {
                 conn.Open();
@@ -1628,7 +1843,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_relatedschool", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1637,11 +1852,14 @@ namespace mvctest.dbop
         }
         public static string get_act(int schoolid, int actid, string acttime)
         {
+            writeLog_api("get_act", "schoolid:" + schoolid + " actid:" + actid + " acttime:" + acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select top 10 * from activity  inner join Organazation on organazation.OrganizationID = Activity.OrganazationID where Organazation.schoolID = " + schoolid + " and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime < '" + acttime + "') order by activity.ActivityTime desc,activity.ActivityID";
-
+            cmd.CommandText = "select top 10 * from activity  inner join Organazation on organazation.OrganizationID = Activity.OrganazationID where Organazation.schoolID = @schoolid and ((Activity.ActivityTime = @acttime and Activity.ActivityID > @actid) or Activity.ActivityTime < @acttime) order by activity.ActivityTime desc,activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("acttime", acttime));
             try
             {
                 conn.Open();
@@ -1680,7 +1898,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_act", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1690,10 +1908,14 @@ namespace mvctest.dbop
 
         public static string get_actx(string loginid, int actid, string acttime)
         {
+            writeLog_api("get_actx", "loginid:" + loginid + " actid:" + actid + " acttime:" + acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "with A as (select * from member_activity where loginid = '" + loginid + "')select top 10 * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID in (select SchoolID from Member_School where LoginID = '" + loginid + "' and gzstate = 1) and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime > '" + acttime + "') order by activity.ActivityTime,activity.ActivityID";
+            cmd.CommandText = "with A as (select * from member_activity where loginid = @loginid)select top 10 * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID in (select SchoolID from Member_School where LoginID = @loginid and gzstate = 1) and ((Activity.ActivityTime = @acttime and Activity.ActivityID > @actid) or Activity.ActivityTime > @acttime) order by activity.ActivityTime,activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("acttime", acttime));
             int[] ac = new int[11];
             int top = 0;
             int[] cv = new int[11];
@@ -1755,7 +1977,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_actbytime", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1765,10 +1987,14 @@ namespace mvctest.dbop
 
         public static string get_actx_all(string loginid, int actid, string acttime)
         {
+            writeLog_api("get_actx_all", "loginid:" + loginid + " actid:" + actid + " acttime:" + acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "with A as (select * from member_activity where loginid = '" + loginid + "')select * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID in (select SchoolID from Member_School where LoginID = '" + loginid + "' and gzstate = 1) and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime > '" + acttime + "') order by activity.ActivityTime,activity.ActivityID";
+            cmd.CommandText = "with A as (select * from member_activity where loginid = @loginid)select * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID in (select SchoolID from Member_School where LoginID = @loginid and gzstate = 1) and ((Activity.ActivityTime = @acttime and Activity.ActivityID > @actid) or Activity.ActivityTime > @acttime) order by activity.ActivityTime,activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("acttime", acttime));
             int[] ac = new int[1100];
             int top = 0;
             int[] cv = new int[1100];
@@ -1830,7 +2056,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_actbytime", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1840,10 +2066,12 @@ namespace mvctest.dbop
         
         public static string get_act_byschid(int schid)
         {
+            writeLog_api("get_act_byschid", "schid:" + schid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Activity as A left outer join Organazation as B on A.OrganazationID = B.OrganizationID left outer join School as C on B.SchoolID = C.SchoolID where C.SchoolID = " + schid + " and A.ActivityTime > getdate()";
+            cmd.CommandText = "select * from Activity as A left outer join Organazation as B on A.OrganazationID = B.OrganizationID left outer join School as C on B.SchoolID = C.SchoolID where C.SchoolID = @schid and A.ActivityTime > getdate()";
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
             JObject emp1 = new JObject();
             try
             {
@@ -1890,7 +2118,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_act_byschid", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1901,10 +2129,12 @@ namespace mvctest.dbop
 
         public static string get_session_act_byschid(int schid)
         {
+            writeLog_api("get_session_act_byschid", "schid:" + schid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Activity as A left outer join Organazation as B on A.OrganazationID = B.OrganizationID left outer join School as C on B.SchoolID = C.SchoolID where C.SchoolID = " + schid + " and A.ActivityTime > getdate()";
+            cmd.CommandText = "select * from Activity as A left outer join Organazation as B on A.OrganazationID = B.OrganizationID left outer join School as C on B.SchoolID = C.SchoolID where C.SchoolID = @schid and A.ActivityTime > getdate()";
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
             JObject emp1 = new JObject();
             try
             {
@@ -1951,7 +2181,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_act_byschid", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -1963,11 +2193,12 @@ namespace mvctest.dbop
 
         public static string get_sch_act(int schoolid)
         {
+            writeLog_api("get_sch_act", "schoolid:" + schoolid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from activity  inner join Organazation on organazation.OrganizationID = Activity.OrganazationID where Organazation.schoolID = " + schoolid + " and activity.ActivityTime > (select dateadd(HOUR,-3,getdate())) order by activity.ActivityTime desc,activity.ActivityID";
-
+            cmd.CommandText = "select * from activity  inner join Organazation on organazation.OrganizationID = Activity.OrganazationID where Organazation.schoolID = @schoolid and activity.ActivityTime > (select dateadd(HOUR,-3,getdate())) order by activity.ActivityTime desc,activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
             try
             {
                 conn.Open();
@@ -2006,7 +2237,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_sch_act", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2015,10 +2246,15 @@ namespace mvctest.dbop
         }
         public static string get_actbytime(string loginid,int schoolid, int actid, string acttime)
         {
+            writeLog_api("get_actbytime", "loginid:" + loginid + " schoolid:" + schoolid + " actid:" + actid + " acttime:" + acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "with A as (select * from member_activity where loginid = '" + loginid + "')select top 10 * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID = " + schoolid + " and ((Activity.ActivityTime = '" + acttime + "' and Activity.ActivityID > " + actid.ToString() + ") or Activity.ActivityTime > '" + acttime + "') order by activity.ActivityTime,activity.ActivityID";
+            cmd.CommandText = "with A as (select * from member_activity where loginid = @loginid)select top 10 * from activity   inner join Organazation on organazation.OrganizationID = Activity.OrganazationID inner join school on organazation.SchoolID = School.SchoolID left outer join A on Activity.ActivityID = A.ActivityID where Organazation.schoolID = @schoolid and ((Activity.ActivityTime = @acttime and Activity.ActivityID > @actid) or Activity.ActivityTime > @acttime) order by activity.ActivityTime,activity.ActivityID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
+            cmd.Parameters.Add(new SqlParameter("actid", actid));
+            cmd.Parameters.Add(new SqlParameter("acttime", acttime));
             int[] ac = new int[1100];
             int top = 0;
             int[] cv = new int[1100];
@@ -2080,7 +2316,7 @@ namespace mvctest.dbop
             catch (System.Exception ee)
             {
                 writeLog("get_actbytime", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2089,6 +2325,7 @@ namespace mvctest.dbop
         }
         public static string get_relatedact(int relatedid, int actid, string acttime)
         {
+            writeLog_api("get_relatedact", "relatedid:" + relatedid + " actid:" + actid + " actid:" + actid + " acttime:" + acttime);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2137,7 +2374,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_relatedact", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2146,11 +2383,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool post_confirm(string mid, int b)
         {
+            writeLog_api("post_confirm", "mid:" + mid + " b:" + b);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             string sstime = DateTime.Now.ToString();
-            cmd.CommandText = "UPDATE Message_Member SET status = " + (b == 1 ? 1 : 2) + " , confirmtime = getdate()  where  MsgMemID = '" + mid + "' ";
+            cmd.CommandText = "UPDATE Message_Member SET status = " + (b == 1 ? 1 : 2) + " , confirmtime = getdate()  where  MsgMemID = @mid";
+            cmd.Parameters.Add(new SqlParameter("mid", mid));
             try
             {
                 conn.Open();
@@ -2172,11 +2411,15 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         #region 社团
         public static string get_org_byclass(string loginID ,int classid,int schoolid)
         {
+            writeLog_api("get_org_byclass", "loginID:" + loginID + " classid:" + classid + " schoolid:" + schoolid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = "select * from Member_School where LoginID = '" + loginID + "'";
+            cmd.CommandText = "select * from Member_School where LoginID = @loginID";
+            cmd.Parameters.Add(new SqlParameter("loginID", loginID));
+            cmd.Parameters.Add(new SqlParameter("classid", classid));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
             conn.Open();
             SqlDataReader sdr = cmd.ExecuteReader();
             int count = 0;
@@ -2193,8 +2436,8 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 JArray obj = new JArray();
                 for (int i = 0; i < count; i++)
                 {
-                    cmd = conn.CreateCommand();
-                    cmd.CommandText = "with A AS (select * from member_organazation where loginID='" + loginID + "')select  * from organazation left outer join A on A.organazationID = organazation.organizationID where organazation.schoolid=" + schid[i] + " and organazation.classid = " + classid + "";
+                    conn.Close();
+                    cmd.CommandText = "with A AS (select * from member_organazation where loginID=@loginID)select  * from organazation left outer join A on A.organazationID = organazation.organizationID where organazation.schoolid=" + schid[i] + " and organazation.classid = @classid";
                     conn.Open();
                     SqlDataReader sdrx = cmd.ExecuteReader();
                     while (sdrx.Read())
@@ -2227,7 +2470,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2238,11 +2481,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string get_org_all(string loginID, int schoolid)
         {
+            writeLog_api("get_org_all", "loginID:" + loginID + " schoolid:" + schoolid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = "select * from Member_School where LoginID = '" + loginID + "'";
+            cmd.CommandText = "select * from Member_School where LoginID = @loginID";
+            cmd.Parameters.Add(new SqlParameter("loginID", loginID));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
             conn.Open();
             SqlDataReader sdr = cmd.ExecuteReader();
             int count = 0;
@@ -2259,8 +2505,9 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 JArray obj = new JArray();
                 for (int i = 0; i < count; i++)
                 {
-                    cmd = conn.CreateCommand();
-                    cmd.CommandText = "with A AS (select * from member_organazation where loginID='" + loginID + "')select  * from organazation left outer join A on A.organazationID = organazation.organizationID where organazation.schoolid=" + schid[i];
+                    //cmd = conn.CreateCommand();
+                    conn.Close();
+                    cmd.CommandText = "with A AS (select * from member_organazation where loginID=@loginID)select  * from organazation left outer join A on A.organazationID = organazation.organizationID where organazation.schoolid=" + schid[i];
                     conn.Open();
                     SqlDataReader sdrx = cmd.ExecuteReader();
                     while (sdrx.Read())
@@ -2293,7 +2540,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2303,11 +2550,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_org_byrate(string loginid,double rate,int orgid)
         {
+            writeLog_api("get_org_byrate", "loginid:" + loginid + " rate:" + rate + " orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "with A as (select * from member_organazation where loginID='" + loginid + "') select top 10 * from organazation left outer join A on A.organazationID = organazation.organizationID where rate < " + rate + " or (rate = " + rate + " and organizationid > " + orgid + ")order by rate DESC,OrganizationID";
-
+            cmd.CommandText = "with A as (select * from member_organazation where loginID=@loginid) select top 10 * from organazation left outer join A on A.organazationID = organazation.organizationID where rate < @rate or (rate = @rate and organizationid > @orgid)order by rate DESC,OrganizationID";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("rate", rate));
+            cmd.Parameters.Add(new SqlParameter("orgid", orgid));
             try
             {
                 conn.Open();
@@ -2345,7 +2595,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2355,11 +2605,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_org_web(int classid, int schoolid)
         {
+            writeLog_api("get_org_web", "classid:" + classid + " schoolid:" + schoolid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            if (classid == 0) cmd.CommandText = "select * from Organazation left outer join class on organazation.ClassID = class.ClassID left outer join school on organazation.schoolid = school.schoolid where School.SchoolID = " + schoolid;
-            else cmd.CommandText = "select * from Organazation left outer join class on organazation.ClassID = class.ClassID left outer join school on organazation.schoolid = school.schoolid where organazation.classid = " + classid + " and School.SchoolID = " + schoolid;
+            if (classid == 0) cmd.CommandText = "select * from Organazation left outer join class on organazation.ClassID = class.ClassID left outer join school on organazation.schoolid = school.schoolid where School.SchoolID = @schoolid";
+            else cmd.CommandText = "select * from Organazation left outer join class on organazation.ClassID = class.ClassID left outer join school on organazation.schoolid = school.schoolid where organazation.classid = @classid and School.SchoolID = @schoolid";
+            cmd.Parameters.Add(new SqlParameter("classid", classid));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
             try
             {
                 conn.Open();
@@ -2397,7 +2650,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2407,11 +2660,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_org_bycnt(int cnt,int orgid)
         {
+            writeLog_api("get_org_bycnt", "cnt:" + cnt + " orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select top 10 * from organazation where CountMember + Fansnum < " + cnt + " or (CountMember + Fansnum = " + cnt + " and organizationid > " + orgid + ")order by (CountMember + Fansnum) DESC,OrganizationID";
-
+            cmd.CommandText = "select top 10 * from organazation where CountMember + Fansnum < @cnt or (CountMember + Fansnum = @cnt and organizationid > @orgid)order by (CountMember + Fansnum) DESC,OrganizationID";
+            cmd.Parameters.Add(new SqlParameter("cnt",cnt));
+            cmd.Parameters.Add(new SqlParameter("orgid", orgid));
             try
             {
                 conn.Open();
@@ -2444,7 +2699,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2454,10 +2709,12 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_org_byname(string name)
         {
+            writeLog_api("get_org_byname", "name:" + name);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from organazation where organizationname like '%" + name + "%' order by rate DESC";
+            cmd.CommandText = "select * from organazation where organizationname like @name order by rate DESC";
+            cmd.Parameters.Add(new SqlParameter("name", "%" + name + "%"));
 
             try
             {
@@ -2491,7 +2748,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2501,11 +2758,12 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_org_allmember(string orgid)
         {
+            writeLog_api("get_org_allmember", "orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Member_Organazation ,Member where Member_Organazation.LoginID = Member.LoginID and Member_Organazation.gzstate = 1 and Member_Organazation.OrganazationID = " + orgid;
-
+            cmd.CommandText = "select * from Member_Organazation ,Member where Member_Organazation.LoginID = Member.LoginID and Member_Organazation.gzstate = 1 and Member_Organazation.OrganazationID = @orgid";
+            cmd.Parameters.Add(new SqlParameter("orgid", orgid));
             try
             {
                 conn.Open();
@@ -2536,7 +2794,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2546,11 +2804,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_orgx_info(int orgid,string loginid)
         {
+            writeLog_api("get_orgx_info", "orgid:" + orgid + " loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from  Organazation ,school, Class where organazation.OrganizationID = " + orgid + " and ORGANAZATION.SchoolID = School.SchoolID and ORGANAZATION.ClassID = Class.ClassID";
-
+            cmd.CommandText = "select * from  Organazation ,school, Class where organazation.OrganizationID = @orgid and ORGANAZATION.SchoolID = School.SchoolID and ORGANAZATION.ClassID = Class.ClassID";
+            cmd.Parameters.Add(new SqlParameter("orgid", orgid));
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
             try
             {
                 conn.Open();
@@ -2581,7 +2841,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                      
                 }
                 conn.Close();
-                cmd.CommandText = "select * from  member_Organazation where OrganazationID = " + orgid.ToString() + " and loginid = '" + loginid + "'";
+                cmd.CommandText = "select * from  member_Organazation where OrganazationID = @orgid and loginid = @loginid";
                 conn.Open();
                 SqlDataReader sdrx = cmd.ExecuteReader();
                 if (sdrx.Read() == false)
@@ -2601,7 +2861,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2611,6 +2871,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_orgx_activity(int orgid)
         {
+            writeLog_api("get_orgx_activity", "orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2647,7 +2908,11 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 }
                 
                 emp1.Add("orgx_activity", obj);
-                emp1.Add("act_avgrate", sum / cnt);
+                if (cnt == 0)
+                {
+                    emp1.Add("act_avgrate", 0);
+                }
+                else emp1.Add("act_avgrate", sum / cnt);
                 
                 return emp1.ToString();
             }
@@ -2655,7 +2920,67 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
+            }
+            finally
+            {
+                conn.Close();
+            }
+            //return "error";
+        }
+
+        public static string get_orgx_activity_now(int orgid)
+        {
+            writeLog_api("get_orgx_activity", "orgid:" + orgid);
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = "with actcnt as(select ActivityID,COUNT(distinct(loginid)) as cnt from member_activity group by(ActivityID))select * from Activity,actcnt where Activity.OrganazationID = " + orgid.ToString() + " and Activity.ActivityID = actcnt.ActivityID and Activity.Activitytime >= getdate()";
+
+            try
+            {
+                conn.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                JArray obj = new JArray();
+                JObject emp1 = new JObject();
+
+                double sum = 0;
+                int cnt = 0;
+                while (sdr.Read())
+                {
+                    JObject emp = new JObject();
+                    if (sdr["ActivityID"] != DBNull.Value) emp.Add("ActivityID", (int)sdr["ActivityID"]);
+                    if (sdr["ActivityName"] != DBNull.Value) emp.Add("ActivityName", (string)sdr["ActivityName"]);
+                    if (sdr["GroupID"] != DBNull.Value) emp.Add("GroupID", (string)sdr["GroupID"]);
+                    if (sdr["ActivityTime"] != DBNull.Value) emp.Add("ActivityTime", ((DateTime)sdr["ActivityTime"]).ToString());
+                    if (sdr["PhotoDir"] != DBNull.Value) emp.Add("PhotoDir", (string)sdr["PhotoDir"]);
+                    if (sdr["OriginalDir"] != DBNull.Value) emp.Add("OriginalDir", (string)sdr["OriginalDir"]);
+                    if (sdr["Address"] != DBNull.Value) emp.Add("Address", (string)sdr["Address"]);
+                    if (sdr["boynum"] != DBNull.Value) emp.Add("boynum", (int)sdr["boynum"]);
+                    if (sdr["girlnum"] != DBNull.Value) emp.Add("girlnum", (int)sdr["girlnum"]);
+                    if (sdr["rate"] != DBNull.Value) emp.Add("rate", (double)sdr["rate"]);
+                    sum += (double)sdr["rate"];
+                    cnt++;
+                    if (sdr["cnt"] != DBNull.Value) emp.Add("cnt", (int)sdr["cnt"]);
+                    obj.Add(emp);
+
+                }
+
+                emp1.Add("orgx_activity", obj);
+                if (cnt == 0)
+                {
+                    emp1.Add("act_avgrate", 0);
+                }
+                else emp1.Add("act_avgrate", sum / cnt);
+
+                return emp1.ToString();
+            }
+
+
+            catch (System.Exception ee)
+            {
+                return "false";
             }
             finally
             {
@@ -2665,6 +2990,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_orgx_nowact(string loginid,int orgid)
         {
+            writeLog_api("get_orgx_nowact", "orgid:" + orgid + " loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2726,7 +3052,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -2737,6 +3063,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         
         public static bool add_org_gz(string loginid, int orgid)
         {
+            writeLog_api("add_org_gz", "orgid:" + orgid + " loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2774,6 +3101,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool add_sch_gz(string loginid, int schid)
         {
+            writeLog_api("add_sch_gz", "schid:" + schid + " loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2811,6 +3139,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool add_per_gz(string from, string to)
         {
+            writeLog_api("add_per_gz", "from:" + from + " to:" + to);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2848,6 +3177,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool add_org_cj(string loginid, int orgid)
         {
+            writeLog_api("add_org_cj", "loginid:" + loginid + " orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2885,6 +3215,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool delete_org_gz(string loginid, int orgid)
         {
+            writeLog_api("delete_org_gz", "loginid:" + loginid + " orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2899,7 +3230,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -2909,6 +3240,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool delete_sch_gz(string loginid, int schid)
         {
+            writeLog_api("delete_sch_gz", "loginid:" + loginid + " schid:" + schid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2923,7 +3255,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -2933,6 +3265,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool delete_per_gz(string loginid, string mid)
         {
+            writeLog_api("delete_per_gz", "loginid:" + loginid + " mid:" + mid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2947,7 +3280,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -2957,6 +3290,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool confirm_per_gz(string from, string to,int b)
         {
+            writeLog_api("confirm_per_gz", "from:" + from + " to:" + to + " b:" + b);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2971,7 +3305,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -2981,6 +3315,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool delete_org_cj(string loginid, int orgid)
         {
+            writeLog_api("delete_org_cj", "loginid:" + loginid + " orgid:" + orgid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -2995,7 +3330,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3007,6 +3342,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         #region 账户管理
         public static string get_my_org(string loginid)
         {
+            writeLog_api("get_my_org", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3049,7 +3385,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_org", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3059,6 +3395,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_my_group(string loginid)
         {
+            writeLog_api("get_my_group", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3137,7 +3474,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_group", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3147,6 +3484,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_my_activity(string logid)
         {
+            writeLog_api("get_my_activity", "logid:" + logid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3203,7 +3541,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_activity", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3213,6 +3551,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_my_tucao(string loginid)
         {
+            writeLog_api("get_my_tucao", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3246,7 +3585,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_tucao", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3256,6 +3595,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_my_ershou(string loginid)
         {
+            writeLog_api("get_my_ershou", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3294,7 +3634,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_ershou", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3304,6 +3644,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_my_guanzhuinfo(string loginid)
         {
+            writeLog_api("get_my_guanzhuinfo", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3339,7 +3680,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_my_guanzhuinfo", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3349,11 +3690,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool  change_passwd(string loginid, string passwd)
         {
+            writeLog_api("change_passwd", "loginid:" + loginid + " passwd:" + passwd);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member SET loginpwd = '" + passwd + "' where loginid = '" + loginid + "'";
-
+            cmd.CommandText = "UPDATE Member SET loginpwd = @passwd where loginid = @loginid";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
 
 
             try
@@ -3367,7 +3710,38 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("change_passwd", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static bool change_passwd_md5(string loginid, string passwd)
+        {
+            writeLog_api("change_passwd", "loginid:" + loginid + " passwd:" + passwd);
+            string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection conn = new SqlConnection(strConn);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "UPDATE Member SET md5pwd = @passwd where loginid = @loginid";
+
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+
+
+            catch (System.Exception ee)
+            {
+                writeLog("change_passwd", ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3378,6 +3752,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string deletetest()
         {
+            writeLog_api("deletetest", "loginid:DZF");
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3394,7 +3769,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("change_passwd", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return ee.Message.ToString();
             }
             finally
@@ -3406,12 +3781,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static bool change_introduce(string loginid, string introduce)
         {
+            writeLog_api("change_introduce", "loginid:" + loginid + " introduce:" + introduce);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member SET introduce = '" + introduce + "' where loginid = '" + loginid + "'";
+            cmd.CommandText = "UPDATE Member SET introduce = @introduce where loginid = @loginid";
 
-
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("introduce", introduce));
 
             try
             {
@@ -3424,7 +3801,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("change_introduce", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3434,12 +3811,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool change_nickname(string loginid, string nickname)
         {
+            writeLog_api("change_nickname", "loginid:" + loginid + " nickname:" + nickname);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member SET nickname = '" + nickname + "' where loginid = '" + loginid + "'";
+            cmd.CommandText = "UPDATE Member SET nickname = @nickname where loginid = @loginid";
 
-
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("nickname", nickname));
 
             try
             {
@@ -3452,7 +3831,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("change_nickname", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3462,12 +3841,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool upload_photo(string loginid,string picname)
         {
+            writeLog_api("upload_photo", "loginid:" + loginid + " picname:" + picname);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Member SET photo = '" + picname + "' where loginid = '" + loginid + "'";
+            cmd.CommandText = "UPDATE Member SET photo = @picname where loginid = @loginid";
 
-
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("picname", picname));
 
             try
             {
@@ -3480,7 +3861,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("upload_photo", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3490,10 +3871,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string getacount(string loginid)
         {
+            writeLog_api("getacount", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + loginid + "'";
+            cmd.CommandText = "select * from member where loginid = @loginid";
+
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+
             try
             {
                 conn.Open();
@@ -3523,7 +3908,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("getacount", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
               
             }
             finally
@@ -3533,10 +3918,12 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }  
         public static bool  change_school(string loginid, int schid)
         {
+            writeLog_api("change_school", "loginid:" + loginid + " schid:" + schid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "UPDATE Member SET schoolid = '" + schid + "' where loginid = '" + loginid + "'";
+            
             try
             {
                 conn.Open();
@@ -3548,7 +3935,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("change_school", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -3558,11 +3945,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string  login(string loginid, string passwd,string ipadr)
         {
+            //writeLog_api("login", "loginid:" + loginid + " passwd:" + passwd + " ipadr:" + ipadr);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + loginid + "' and loginpwd = '" + passwd + "'";
-            
+            cmd.CommandText = "select * from member where loginid = @loginid and loginpwd = @passwd";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("ipadr", ipadr));
             try
             {
                 conn.Open();
@@ -3592,7 +3982,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
-                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values ('" + loginid + "','" + DateTime.Now.ToString() + "','" + ipadr + "' )";
+                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values (@loginid,getdate(),@ipadr)";
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     obj.Add(emp);
@@ -3600,19 +3990,19 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     emp1.Add("memberinfo", obj);
                     //obj.ToString();
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = '" + loginid + "' and cjState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = @loginid and cjState = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("actnum", (int)sdr["cnt"]);
                     else emp1.Add("actnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = '" + loginid + "' and gzState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = @loginid and gzState = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("orgnum", (int)sdr["cnt"]);
                     else emp1.Add("orgnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= '" + loginid + "' or user2 = '" + loginid + "') and state = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= @loginid or user2 = @loginid) and state = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("memnum", (int)sdr["cnt"]);
@@ -3634,7 +4024,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("login", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
                
             }
             finally
@@ -3645,11 +4035,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string login_md5(string loginid, string passwd, string ipadr)
         {
+            //writeLog_api("login_md5", "loginid:" + loginid + " passwd:" + passwd + " ipadr:" + ipadr);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + loginid + "' and md5pwd = '" + passwd + "'";
-
+            cmd.CommandText = "select * from member where loginid = @loginid and md5pwd = @passwd";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
             try
             {
                 conn.Open();
@@ -3679,7 +4071,9 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
-                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values ('" + loginid + "','" + DateTime.Now.ToString() + "','" + ipadr + "' )";
+                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values (@loginid,getdate(),@loginip)";
+                    //cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+                    cmd.Parameters.Add(new SqlParameter("loginip", ipadr));
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     obj.Add(emp);
@@ -3687,25 +4081,29 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     emp1.Add("memberinfo", obj);
                     //obj.ToString();
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = '" + loginid + "' and cjState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = @loginid and cjState = 1";
+                    //cmd.Parameters.Add(new SqlParameter("loginid", loginid));
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("actnum", (int)sdr["cnt"]);
                     else emp1.Add("actnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = '" + loginid + "' and gzState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = @loginid and gzState = 1";
+                    //cmd.Parameters.Add(new SqlParameter("loginid", loginid));
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("orgnum", (int)sdr["cnt"]);
                     else emp1.Add("orgnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= '" + loginid + "' or user2 = '" + loginid + "') and state = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= @loginid or user2 = @loginid) and state = 1";
+                    //cmd.Parameters.Add(new SqlParameter("loginid", loginid));
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("memnum", (int)sdr["cnt"]);
                     else emp1.Add("memnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select * from member_school where loginid = '" + loginid + "' and gzstate = 1";
+                    cmd.CommandText = "select * from member_school where loginid = @loginid and gzstate = 1";
+                    //cmd.Parameters.Add(new SqlParameter("loginid", loginid));
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read())
@@ -3720,8 +4118,8 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                writeLog("login", ee.Message.ToString());
-                return (ee.Message.ToString());
+                writeLog("login_md5", ee.Message.ToString() + "  " + cmd.CommandText);
+                return "false";
 
             }
             finally
@@ -3732,11 +4130,15 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string login_md5_leanid(string loginid, string passwd, string ipadr,string leanid)
         {
+            //writeLog_api("login_md5", "loginid:" + loginid + " passwd:" + passwd + " ipadr:" + ipadr + " leanid:" + leanid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + loginid + "' and md5pwd = '" + passwd + "'";
-
+            cmd.CommandText = "select * from member where loginid = @loginid and md5pwd = @passwd";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("ipadr", ipadr));
+            cmd.Parameters.Add(new SqlParameter("leanid", leanid));
             try
             {
                 conn.Open();
@@ -3766,12 +4168,12 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                         emp.Add("needsch", 1);
                     }
                     conn.Close();
-                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values ('" + loginid + "','" + DateTime.Now.ToString() + "','" + ipadr + "' )";
+                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values (@loginid,getdate(),@ipadr)";
                     conn.Open();
                     cmd.ExecuteNonQuery();
 
                     conn.Close();
-                    cmd.CommandText = "update member set leancloudid = '" + leanid + "' where loginid = '" + loginid + "'";
+                    cmd.CommandText = "update member set leancloudid = @leanid where loginid = @loginid";
                     conn.Open();
                     cmd.ExecuteNonQuery();
 
@@ -3781,25 +4183,25 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     emp1.Add("memberinfo", obj);
                     //obj.ToString();
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = '" + loginid + "' and cjState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Activity where LoginID = @loginid and cjState = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("actnum", (int)sdr["cnt"]);
                     else emp1.Add("actnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = '" + loginid + "' and gzState = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from Member_Organazation where LoginID = @loginid and gzState = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("orgnum", (int)sdr["cnt"]);
                     else emp1.Add("orgnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= '" + loginid + "' or user2 = '" + loginid + "') and state = 1";
+                    cmd.CommandText = "select COUNT(1) as cnt from guanzhu where (user1= @loginid or user2 = @loginid) and state = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read()) emp1.Add("memnum", (int)sdr["cnt"]);
                     else emp1.Add("memnum", 0);
                     conn.Close();
-                    cmd.CommandText = "select * from member_school where loginid = '" + loginid + "' and gzstate = 1";
+                    cmd.CommandText = "select * from member_school where loginid = @loginid and gzstate = 1";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     if (sdr.Read())
@@ -3814,8 +4216,8 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
             catch (System.Exception ee)
             {
-                writeLog("login", ee.Message.ToString());
-                return (ee.Message.ToString());
+                writeLog("login_md5_leanid", ee.Message.ToString());
+                return "false";
 
             }
             finally
@@ -3825,10 +4227,15 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string tg_count(string tgid, string ck, string psys, string agent)
         {
+            writeLog_api("tg_count", "tgid:" + tgid + " ck:" + ck + " psys:" + psys + " agent:" + agent);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Tuiguang_count where Tg_Cookie = '" + ck + "'and Tg_ID = "+tgid;
+            cmd.CommandText = "select * from Tuiguang_count where Tg_Cookie = @ck and Tg_ID = @tgid";
+            cmd.Parameters.Add(new SqlParameter("tgid", tgid));
+            cmd.Parameters.Add(new SqlParameter("ck", ck));
+            cmd.Parameters.Add(new SqlParameter("psys", psys));
+            cmd.Parameters.Add(new SqlParameter("agent", agent));
             try
             {
                 conn.Open();
@@ -3836,7 +4243,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 if (!sdr.Read())
                 {
                     conn.Close();
-                    cmd.CommandText = "insert into Tuiguang_count(Tg_ID,Tg_Cookie,Tg_Sys,Tg_Agent,Tg_Time) values('" + tgid + "','" + ck + "','" + psys + "','" + agent + "','" + DateTime.Now.ToString() + "')";
+                    cmd.CommandText = "insert into Tuiguang_count(Tg_ID,Tg_Cookie,Tg_Sys,Tg_Agent,Tg_Time) values(@tgid,@ck,@psys,@agent,getdate())";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     return "true";
@@ -3846,7 +4253,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("tg_count", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3856,10 +4263,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string tg_calc(string ck, int schoolid, int qd)
         {
+            writeLog_api("tg_calc", " ck:" + ck + " schoolid:" + schoolid + " qd:" + qd);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Tuiguang_Calc where Cookie = '" + ck + "'and SchoolID = " + schoolid + " and Qudao = " + qd;
+            cmd.CommandText = "select * from Tuiguang_Calc where Cookie = @ck and SchoolID = @schoolid and Qudao = @qd";
+            cmd.Parameters.Add(new SqlParameter("ck", ck));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
+            cmd.Parameters.Add(new SqlParameter("qd", qd));
             try
             {
                 conn.Open();
@@ -3867,7 +4278,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 if (!sdr.Read())
                 {
                     conn.Close();
-                    cmd.CommandText = "insert into Tuiguang_Calc(Cookie,SchoolID,Qudao,Time) values('" + ck + "'," + schoolid + "," + qd + ",'" + DateTime.Now.ToString() + "')";
+                    cmd.CommandText = "insert into Tuiguang_Calc(Cookie,SchoolID,Qudao,Time) values(@ck,@schoolid,@qd,getdate())";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     return "true";
@@ -3877,7 +4288,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("tg_calc", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3887,10 +4298,15 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string tg_calcdl(string ck, int schoolid, int qd, string client)
         {
+            writeLog_api("tg_calcdl", " ck:" + ck + " schoolid:" + schoolid + " qd:" + qd + " client:" + client);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Tuiguang_Calc where Cookie = '" + ck + "'and SchoolID = " + schoolid + " and Qudao = " + qd;
+            cmd.CommandText = "select * from Tuiguang_Calc where Cookie = @ck and SchoolID = @schoolid and Qudao = @qd";
+            cmd.Parameters.Add(new SqlParameter("ck", ck));
+            cmd.Parameters.Add(new SqlParameter("schoolid", schoolid));
+            cmd.Parameters.Add(new SqlParameter("qd", qd));
+            cmd.Parameters.Add(new SqlParameter("client", client));
             try
             {
                 conn.Open();
@@ -3898,7 +4314,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 if (sdr.Read())
                 {
                     conn.Close();
-                    cmd.CommandText = "UPDATE Tuiguang_Calc SET Download = 1,CSys = '" + client + "', Dl_Time='" + DateTime.Now.ToString() + "' Where Cookie = '" + ck + "'and SchoolID = " + schoolid + " and Qudao = " + qd;
+                    cmd.CommandText = "UPDATE Tuiguang_Calc SET Download = 1,CSys = @client, Dl_Time= getdate() Where Cookie = @ck and SchoolID = @schoolid and Qudao = @qd";
                     conn.Open();
                     sdr = cmd.ExecuteReader();
                     return "true";
@@ -3908,7 +4324,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("tg_calcdl", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3917,6 +4333,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_session_schidandname(int schid)
         {
+            writeLog_api("get_session_schidandname", "schid:" + schid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -3936,8 +4353,8 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 }
                 else
                 {
-                    emp.Add("SchoolID", 0);
-                    emp.Add("SchoolName", "null");
+                    emp.Add("SchoolID", 12);
+                    emp.Add("SchoolName", "华东师范大学");
                     obj.Add(emp);
                 }
 
@@ -3947,7 +4364,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("tg_count", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -3956,11 +4373,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string wxlogin(string openid, string ipadr)
         {
+            writeLog_api("wxlogin", "openid:" + openid + " ipadr:" + ipadr);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid in (select loginid from wxuser where openid = '" + openid + "')";
-
+            cmd.CommandText = "select * from member where loginid in (select loginid from wxuser where openid = @openid)";
+            cmd.Parameters.Add(new SqlParameter("openid", openid));
+            cmd.Parameters.Add(new SqlParameter("ipadr", ipadr));
             try
             {
                 conn.Open();
@@ -3980,7 +4399,8 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                     if (sdr["photo"] != DBNull.Value) emp.Add("photo", (string)sdr["photo"]);
                     else emp.Add("photo", "tidai.jpg");
                     conn.Close();
-                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values ('" + loginid + "','" + DateTime.Now.ToString() + "','" + ipadr + "' )";
+                    cmd.CommandText = "insert into memberinfo (loginid,logintime,loginip) values (@loginid,getdate(),@ipadr)";
+                    cmd.Parameters.Add(new SqlParameter("loginid", loginid));
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     obj.Add(emp);
@@ -3998,7 +4418,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("login", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
 
             }
             finally
@@ -4009,13 +4429,18 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static bool  reg(string name, string passwd,string phone,int schid,int sex)
         {
+            writeLog_api("reg", "name:" + name + " passwd:" + passwd + " phone:" + phone + " schid:" + schid + " sex:" + sex);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             Random random = new Random();
             int n = random.Next(1, 5);
-            cmd.CommandText = "insert into member(loginid,loginpwd,nickname,photo,schoolid,sex,regtime) values('" + name + "','" + passwd + "','" + phone + "','tidai"+ n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "')";
-
+            cmd.CommandText = "insert into member(loginid,loginpwd,nickname,photo,schoolid,sex,regtime) values(@name,@passwd,@phone,'tidai"+ n.ToString() + ".jpg',@schid,@sex,getdate())";
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
 
             try
             {
@@ -4029,7 +4454,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4040,13 +4465,18 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static bool reg_md5(string name, string passwd, string phone, int schid, int sex)
         {
+            writeLog_api("reg_md5", "name:" + name + " passwd:" + passwd + " phone:" + phone + " schid:" + schid + " sex:" + sex);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             Random random = new Random();
             int n = random.Next(1, 5);
-            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime) values('" + name + "','" + passwd + "','" + passwd + "','" + phone + "','tidai" + n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "')";
-
+            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime) values(@name,@passwd,@passwd,@phone,'tidai" + n.ToString() + ".jpg',@schid,@sex,getdate())";
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
 
             try
             {
@@ -4060,7 +4490,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4070,14 +4500,19 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool reg_md5_src(string name, string passwd, string phone, int schid, int sex,string src)
         {
+            writeLog_api("reg_md5_src", "name:" + name + " passwd:" + passwd + " phone:" + phone + " schid:" + schid + " sex:" + sex + " src:" + src);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             Random random = new Random();
             int n = random.Next(1, 5);
-            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,src) values('" + name + "','" + passwd + "','" + passwd + "','" + phone + "','tidai" + n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "','" + src + "')";
-
-
+            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,src) values(@name,@passwd,@passwd,@phone,'tidai" + n.ToString() + ".jpg',@schid,@sex,getdate(),@src)";
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
+            cmd.Parameters.Add(new SqlParameter("src", src));
             try
             {
                 conn.Open();
@@ -4090,7 +4525,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4100,14 +4535,22 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool reg_md5_device(string name, string passwd, string phone, int schid, int sex, string deviceversion, string operationsystem, string deviceNumber)
         {
+            writeLog_api("reg_md5_device", "name:" + name + " passwd:" + passwd + " phone:" + phone + " schid:" + schid + " sex:" + sex + " deviceversion:" + deviceversion + " operationsystem:" + operationsystem + " deviceNumber:" + deviceNumber);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
             Random random = new Random();
             int n = random.Next(1, 5);
-            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,deviceversion,operationsystem,deviceNumber) values('" + name + "','" + passwd + "','" + passwd + "','" + phone + "','tidai" + n.ToString() + ".jpg'," + schid.ToString() + "," + sex + ",'" + DateTime.Now.ToString() + "','" + deviceversion + "','" + operationsystem + "','" + deviceNumber + "')";
+            cmd.CommandText = "insert into member(loginid,loginpwd,md5pwd,nickname,photo,schoolid,sex,regtime,deviceversion,operationsystem,deviceNumber) values(@name,@passwd,@passwd,@phone,'tidai" + n.ToString() + ".jpg',@schid,@sex,getdate(),@deviceversion,@operationsystem,@deviceNumber)";
 
-
+            cmd.Parameters.Add(new SqlParameter("name", name));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
+            cmd.Parameters.Add(new SqlParameter("phone", phone));
+            cmd.Parameters.Add(new SqlParameter("schid", schid));
+            cmd.Parameters.Add(new SqlParameter("sex", sex));
+            cmd.Parameters.Add(new SqlParameter("deviceversion", deviceversion));
+            cmd.Parameters.Add(new SqlParameter("operationsystem", operationsystem));
+            cmd.Parameters.Add(new SqlParameter("deviceNumber", deviceNumber));
             try
             {
                 conn.Open();
@@ -4120,7 +4563,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4130,11 +4573,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static bool bind_wx(string openid,string loginid,string passwd)
         {
+            writeLog_api("bind_wx", "openid:" + openid + " loginid:" + loginid + " passwd:" + passwd);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + loginid + "' and passwd = '" + passwd + "'";
- 
+            cmd.CommandText = "select * from member where loginid = @loginid and passwd = @passwd";
+            cmd.Parameters.Add(new SqlParameter("openid", openid));
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("passwd", passwd));
             //cmd.CommandText = "insert into WxUser(OpenID,LoginID) values('" + openid + "','" + loginid + "')";
 
 
@@ -4145,7 +4591,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
                 if (sdr.Read())
                 {
                     conn.Close();
-                    cmd.CommandText = "insert into WxUser(OpenID,LoginID) values('" + openid + "','" + loginid + "')";
+                    cmd.CommandText = "insert into WxUser(OpenID,LoginID) values(@openid,@loginid)";
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     return true;
@@ -4157,7 +4603,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4168,12 +4614,13 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static bool  reg_already(string name)
         {
+            writeLog_api("reg_already", "name:" + name);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from member where loginid = '" + name + "'";
+            cmd.CommandText = "select * from member where loginid = @name";
 
-
+            cmd.Parameters.Add(new SqlParameter("name", name));
             try
             {
                 conn.Open();
@@ -4186,7 +4633,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("reg_already", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4196,6 +4643,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_schoollist()
         {
+            writeLog_api("get_schoollist", "name:" + "");
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -4229,7 +4677,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_schoollist", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4239,13 +4687,15 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_newschoollist(string loginid,string city)
         {
+            writeLog_api("get_newschoollist", "loginid:" + loginid + " city:" + city);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
 
             //city = Encoding.UTF8.GetString(Encoding.ASCII.GetBytes(city.ToCharArray()));
-            cmd.CommandText = "with A as (select * from Member_School where loginid='" + loginid + "') select * from School left outer join A on school.SchoolID = A.SchoolID where school.City like '%" + city + "%'";
-
+            cmd.CommandText = "with A as (select * from Member_School where loginid=@loginid) select * from School left outer join A on school.SchoolID = A.SchoolID where school.City like @city";
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("city", "%" + city + "%"));
             try
             {
                 conn.Open();
@@ -4275,7 +4725,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_newschoollist", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4285,6 +4735,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_schoollistx(string loginid)
         {
+            writeLog_api("get_schoollistx", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -4320,7 +4771,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_schoollistx", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4330,6 +4781,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_school(string loginid)
         {
+            writeLog_api("get_school", "loginid:" + loginid);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -4355,7 +4807,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_schoollistx", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4365,6 +4817,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
         }
         public static string get_version()
         {
+            writeLog_api("get_version", "loginid:");
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -4398,7 +4851,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("get_version", ee.Message.ToString());
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4409,12 +4862,14 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static bool add_fankui(string loginid, string content)
         {
+            writeLog_api("add_fankui", "loginid:" + loginid + " content:" + content);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "insert into fankui (loginid,contents,fktime) values ('" + loginid + "' ,  '" + content + "', '" + DateTime.Now.ToString() + "')";
+            cmd.CommandText = "insert into fankui (loginid,contents,fktime) values (@loginid , @content, getdate())";
 
-
+            cmd.Parameters.Add(new SqlParameter("loginid", loginid));
+            cmd.Parameters.Add(new SqlParameter("content", content));
 
             try
             {
@@ -4427,7 +4882,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             catch (System.Exception ee)
             {
                 writeLog("add_fankui", ee.Message.ToString());
-                //return (ee.Message.ToString());
+                //return "false";
                 return false;
             }
             finally
@@ -4461,7 +4916,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             }
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4602,7 +5057,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             }
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {
@@ -4612,6 +5067,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
 
         public static string getAroundSchool(double x,double y)
         {
+            writeLog_api("getAroundSchool", "x:" + x + " y:" + y);
             string strConn = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection conn = new SqlConnection(strConn);
             SqlCommand cmd = conn.CreateCommand();
@@ -4652,7 +5108,7 @@ order by a.ActivityTime desc,a.ActivityID",relatedid,actid,acttime);
             }
             catch (System.Exception ee)
             {
-                return (ee.Message.ToString());
+                return "false";
             }
             finally
             {

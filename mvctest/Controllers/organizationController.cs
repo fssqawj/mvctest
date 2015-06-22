@@ -77,6 +77,12 @@ namespace mvctest.Controllers
              
             return sqlop.get_orgx_activity(orgid);
         }
+
+        public string get_orgx_activity_now(int orgid)
+        {
+
+            return sqlop.get_orgx_activity_now(orgid);
+        }
         public string get_orgx_nowact(int orgid)
         {
             return sqlop.get_orgx_nowact((string)Session["username"],orgid);
